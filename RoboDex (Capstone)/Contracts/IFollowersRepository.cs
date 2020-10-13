@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoboDex__Capstone_.Contracts
 {
-    public interface IFollowerRepository : IRepositoryBase<Followers>
+    public interface IFollowersRepository : IRepositoryBase<Followers>
     {
     }
 }

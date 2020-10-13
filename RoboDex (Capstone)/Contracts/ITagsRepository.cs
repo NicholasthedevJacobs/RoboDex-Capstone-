@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoboDex__Capstone_.Contracts
 {
-    interface ITagsRepository : IRepositoryBase<Tags>
+    public interface ITagsRepository : IRepositoryBase<Tags>
     {
     }
 }

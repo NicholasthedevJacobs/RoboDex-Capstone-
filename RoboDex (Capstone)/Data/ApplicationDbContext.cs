@@ -33,7 +33,7 @@ namespace RoboDex__Capstone_.Data
         public DbSet<Inventory> Inventory { get; set; }
         public DbSet<Followers> Followers { get; set; }
         public DbSet<Items> Items { get; set; }
-        public DbSet<Location> Locations { get; set; }
+        public DbSet<Location> Location { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Tags> Tags { get; set; }
     }

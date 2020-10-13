@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoboDex__Capstone_.Contracts
 {
-    interface IShoppingCartRepository : IRepositoryBase<ShoppingCart>
+    public interface IShoppingCartRepository : IRepositoryBase<ShoppingCart>
     {
     }
 }

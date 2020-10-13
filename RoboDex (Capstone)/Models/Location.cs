@@ -11,7 +11,7 @@ namespace RoboDex__Capstone_.Models
         [Key]
         public int LocationId { get; set; }
         public string MainLocation { get; set; }
-        public string? SecondaryLocation { get; set; }
+        public string SecondaryLocation { get; set; }//make nullable
 
     }
 }
