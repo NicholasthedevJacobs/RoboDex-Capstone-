@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using RoboDex__Capstone_.Models;
 
 namespace RoboDex__Capstone_.Data
 {
@@ -27,5 +28,13 @@ namespace RoboDex__Capstone_.Data
             );
         }
 
+        public DbSet<RoboDexer> RoboDexer { get; set; }
+        public DbSet<Inbox> Inbox { get; set; }
+        public DbSet<Inventory> Inventory { get; set; }
+        public DbSet<Followers> Followers { get; set; }
+        public DbSet<Items> Items { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<Tags> Tags { get; set; }
     }
 }
