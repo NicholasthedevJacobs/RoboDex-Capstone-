@@ -29,7 +29,9 @@ namespace RoboDex__Capstone_.Controllers
             {
                 return RedirectToAction("Create");
             }
-            return View();
+            var userName = _repo.RoboDexer.FindByCondition(r => r.UserName == roboDexerUser.UserName).SingleOrDefault();
+
+            return View(roboDexerUser);
         }
 
         // GET: RoboDexerController/Details/5
