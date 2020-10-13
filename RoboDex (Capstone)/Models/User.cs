@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace RoboDex__Capstone_.Models
 {
-    public class User
+    public class RoboDexer
     {
-        public int UserId { get; set; }
+        public int RoboDexerId { get; set; }
         public int Inbox { get; set; }
         public int Inventory{ get; set; }
         public int ShoppingCart { get; set; }
