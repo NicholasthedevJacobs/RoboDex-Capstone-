@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using RoboDex__Capstone_.ActionFilters;
+using RoboDex__Capstone_.Contracts;
 
 namespace RoboDex__Capstone_
 {
