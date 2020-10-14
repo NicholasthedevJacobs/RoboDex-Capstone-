@@ -155,6 +155,12 @@ namespace RoboDex__Capstone_.Controllers
             _repo.Items.Create(items);
             _repo.Save();
 
+            Inventory inventory = new Inventory();
+            inventory.ItemId = items.ItemId;
+            inventory.RoboDexerId = loggedInRoboDexer.RoboDexerId;
+            _repo.Inventory.Create(inventory);
+            _repo.Save();
+
             return View(items);
         }
 
