@@ -142,34 +142,40 @@ namespace RoboDex__Capstone_.Controllers
 
         public IActionResult AddItem()
         {
-            ItemTags itemsTags = new ItemTags();
-            return View(itemsTags);     
+            ItemTagsLocation itemsTagsLocation = new ItemTagsLocation();
+            return View(itemsTagsLocation);     
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddItem(ItemTags itemTags)
+        public async Task<IActionResult> AddItem(ItemTagsLocation itemTagsLocation)
         {
             //finds the logged in user
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var loggedInRoboDexer = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
 
             //adds the item to the items table
-            //_repo.Items.Create(items);
-            //_repo.Save();
+            var itemObject = itemTagsLocation.Items;
+            _repo.Items.Create(itemObject);
+            _repo.Save();
 
             //adds the created item to the inventory table
-            //Inventory inventory = new Inventory();
-            //inventory.ItemId = items.ItemId;
-            //inventory.RoboDexerId = loggedInRoboDexer.RoboDexerId;
-            //_repo.Inventory.Create(inventory);
-            //_repo.Save();
+            Inventory inventory = new Inventory();
+            inventory.ItemId = itemObject.ItemId;
+            inventory.RoboDexerId = loggedInRoboDexer.RoboDexerId;
+            _repo.Inventory.Create(inventory);
+            _repo.Save();
 
-            //ItemTags itemTag = new ItemTags();
-            //itemTag.Items = items;
+            //adds the input tag into the tags table
+            Tags tags = new Tags();
+            tags.Name = itemTagsLocation.Tags.Name;
+            _repo.Tags.Create(tags);
+            _repo.Save();
 
-            //Tags tags = new Tags();
-            //tags.Name = itemTag.Tags.Name;
+            Location location = new Location();
+            location.MainLocation = itemTagsLocation.Location.MainLocation;
+            location.SecondaryLocation = itemTagsLocation.Location.SecondaryLocation;
+            _repo.Location.Create(location);
 
             return RedirectToAction("Index");
          /*   return View(itemTag)*/;
