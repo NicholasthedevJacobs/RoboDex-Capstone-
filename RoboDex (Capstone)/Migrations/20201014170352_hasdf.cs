@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RoboDex__Capstone_.Migrations
 {
-    public partial class fa : Migration
+    public partial class hasdf : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -95,6 +95,7 @@ namespace RoboDex__Capstone_.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LocationId = table.Column<int>(nullable: false),
                     TagId = table.Column<int>(nullable: false),
+                    IMGUrl = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<double>(nullable: false)
                 },
@@ -280,7 +281,7 @@ namespace RoboDex__Capstone_.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "5087ff7f-139e-4516-9770-f9532d325198", "ded2d54d-74f5-4b48-9432-8ea8eb7f5497", "RoboDexer", "ROBODEXER" });
+                values: new object[] { "29f4323b-2b28-4207-ba47-f8658f50fa4e", "4aa5de55-93e7-40fa-ab7e-f1995c94b7b3", "RoboDexer", "ROBODEXER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

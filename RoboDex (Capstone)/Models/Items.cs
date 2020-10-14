@@ -14,8 +14,8 @@ namespace RoboDex__Capstone_.Models
         [ForeignKey("Location")]
         public int LocationId { get; set; }
         [ForeignKey("Tags")]
-        public string IMGUrl { get; set; }
         public int TagId { get; set; }
+        public string IMGUrl { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
 

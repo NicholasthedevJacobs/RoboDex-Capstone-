@@ -10,8 +10,8 @@ using RoboDex__Capstone_.Data;
 namespace RoboDex__Capstone_.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201014152528_fa")]
-    partial class fa
+    [Migration("20201014170352_hasdf")]
+    partial class hasdf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,8 +50,8 @@ namespace RoboDex__Capstone_.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5087ff7f-139e-4516-9770-f9532d325198",
-                            ConcurrencyStamp = "ded2d54d-74f5-4b48-9432-8ea8eb7f5497",
+                            Id = "29f4323b-2b28-4207-ba47-f8658f50fa4e",
+                            ConcurrencyStamp = "4aa5de55-93e7-40fa-ab7e-f1995c94b7b3",
                             Name = "RoboDexer",
                             NormalizedName = "ROBODEXER"
                         });
@@ -283,6 +283,9 @@ namespace RoboDex__Capstone_.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("IMGUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LocationId")
                         .HasColumnType("int");

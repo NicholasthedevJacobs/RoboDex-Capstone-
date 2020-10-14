@@ -138,5 +138,11 @@ namespace RoboDex__Capstone_.Controllers
 
             return View(myItemsList);
         }
+
+        //public IActionResult AddItem()
+        //{
+        //    Items newItem = new Items();
+
+        //}
     }
 }
