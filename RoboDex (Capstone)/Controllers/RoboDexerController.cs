@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RoboDex__Capstone_.Contracts;
 using RoboDex__Capstone_.Models;
+using RoboDex__Capstone_.Models.ViewModels;
 
 namespace RoboDex__Capstone_.Controllers
 {
@@ -141,27 +142,37 @@ namespace RoboDex__Capstone_.Controllers
 
         public IActionResult AddItem()
         {
-            Items items = new Items();
-            return View(items);     
+            ItemTags itemsTags = new ItemTags();
+            return View(itemsTags);     
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddItem(Items items)
+        public async Task<IActionResult> AddItem(ItemTags itemTags)
         {
+            //finds the logged in user
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var loggedInRoboDexer = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
 
-            _repo.Items.Create(items);
-            _repo.Save();
+            //adds the item to the items table
+            //_repo.Items.Create(items);
+            //_repo.Save();
 
-            Inventory inventory = new Inventory();
-            inventory.ItemId = items.ItemId;
-            inventory.RoboDexerId = loggedInRoboDexer.RoboDexerId;
-            _repo.Inventory.Create(inventory);
-            _repo.Save();
+            //adds the created item to the inventory table
+            //Inventory inventory = new Inventory();
+            //inventory.ItemId = items.ItemId;
+            //inventory.RoboDexerId = loggedInRoboDexer.RoboDexerId;
+            //_repo.Inventory.Create(inventory);
+            //_repo.Save();
 
-            return View(items);
+            //ItemTags itemTag = new ItemTags();
+            //itemTag.Items = items;
+
+            //Tags tags = new Tags();
+            //tags.Name = itemTag.Tags.Name;
+
+            return RedirectToAction("Index");
+         /*   return View(itemTag)*/;
         }
 
 

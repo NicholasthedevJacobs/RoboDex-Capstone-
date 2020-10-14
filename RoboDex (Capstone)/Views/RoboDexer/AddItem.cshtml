@@ -1,4 +1,4 @@
-﻿@model RoboDex__Capstone_.Models.Items
+﻿@model RoboDex__Capstone_.Models.ViewModels.ItemTags
 
 @{
     ViewData["Title"] = "AddItem";
@@ -13,34 +13,39 @@
         <form asp-action="AddItem">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-group">
-                <label asp-for="LocationId" class="control-label"></label>
-                <input asp-for="LocationId" class="form-control" />
-                <span asp-validation-for="LocationId" class="text-danger"></span>
+            <label asp-for="LocationId" class="control-label"></label>
+            <input asp-for="LocationId" class="form-control" />
+            <span asp-validation-for="LocationId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TagId" class="control-label"></label>
+            <input asp-for="TagId" class="form-control" />
+            <span asp-validation-for="TagId" class="text-danger"></span>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="Items.IMGUrl" class="control-label"></label>
+                <input asp-for="Items.IMGUrl" class="form-control" />
+                <span asp-validation-for="Items.IMGUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TagId" class="control-label"></label>
-                <input asp-for="TagId" class="form-control" />
-                <span asp-validation-for="TagId" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="IMGUrl" class="control-label"></label>
-                <input asp-for="IMGUrl" class="form-control" />
-                <span asp-validation-for="IMGUrl" class="text-danger"></span>
+                <label asp-for="Items.Name" class="control-label"></label>
+                <input asp-for="Items.Name" class="form-control" />
+                <span asp-validation-for="Items.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Items.Price" class="control-label"></label>
+                <input asp-for="Items.Price" class="form-control" />
+                <span asp-validation-for="Items.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+                <label  class="control-label">Tag Name</label>
+                <input asp-for="Tags.Name" class="form-control" />
+                <span asp-validation-for="Tags.Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
     </div>
 </div>
 
