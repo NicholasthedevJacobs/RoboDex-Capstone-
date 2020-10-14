@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoboDex__Capstone_.Models
 {
-    public class Location
+    public class LocationPlace
     {
         [Key]
         public int LocationId { get; set; }

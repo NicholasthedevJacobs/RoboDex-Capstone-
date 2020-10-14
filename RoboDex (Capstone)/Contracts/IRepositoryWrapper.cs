@@ -11,7 +11,7 @@ namespace RoboDex__Capstone_.Contracts
         IInboxRepository Inbox { get; }
         IInventoryRepository Inventory { get; }
         IItemsRepository Items { get; }
-        ILocationRepository Location { get; }
+        ILocationPlaceRepository LocationPlace { get; }
         IRoboDexerRepository RoboDexer { get; }
         IShoppingCartRepository ShoppingCart { get; }
         ITagsRepository Tags { get; }

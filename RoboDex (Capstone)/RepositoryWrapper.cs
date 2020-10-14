@@ -14,7 +14,7 @@ namespace RoboDex__Capstone_
         private IInboxRepository _inbox;
         private IInventoryRepository _inventory;
         private IItemsRepository _items;
-        private ILocationRepository _location;
+        private ILocationPlaceRepository _locationPlace;
         private IRoboDexerRepository _roboDexer;
         private IShoppingCartRepository _shoppingCart;
         private ITagsRepository _tags;
@@ -74,15 +74,15 @@ namespace RoboDex__Capstone_
                 return _roboDexer;
             }
         }
-        public ILocationRepository Location
+        public ILocationPlaceRepository LocationPlace
         {
             get
             {
-                if (_location == null)
+                if (_locationPlace == null)
                 {
-                    _location = new LocationRepository(_context);
+                    _locationPlace = new LocationPlaceRepository(_context);
                 }
-                return _location;
+                return _locationPlace;
             }
         }
         

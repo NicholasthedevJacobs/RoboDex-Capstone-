@@ -9,6 +9,6 @@ namespace RoboDex__Capstone_.Models.ViewModels
     {
         public Items Items { get; set; }
         public Tags Tags { get; set; }
-        public Location Location { get; set; }
+        public LocationPlace LocationPlace { get; set; }
     }
 }

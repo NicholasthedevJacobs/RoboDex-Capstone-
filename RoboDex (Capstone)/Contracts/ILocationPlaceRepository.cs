@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using RoboDex__Capstone_.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RoboDex__Capstone_.Contracts
 {
-    public interface ILocationRepository : IRepositoryBase<Location>
+    public interface ILocationPlaceRepository : IRepositoryBase<LocationPlace>
     {
     }
 }
