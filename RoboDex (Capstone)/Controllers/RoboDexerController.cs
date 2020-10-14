@@ -128,12 +128,15 @@ namespace RoboDex__Capstone_.Controllers
                 return NotFound();
             }
 
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var loggedInRoboDexer = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
-            var inventoryId = _repo.RoboDexer.FindByCondition(r => r.InventoryId == loggedInRoboDexer.InventoryId).SingleOrDefault();
-            var inventory = _repo.Inventory.FindByCondition(r => r.InventoryId == id).SingleOrDefault();
+            List<Items> myItemsList = new List<Items>();
 
-            return View(inventory);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var loggedInRoboDexer = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
+            var loggedInRoboDexerId = loggedInRoboDexer.RoboDexerId;
+            myItemsList = _repo.Items.FindByCondition(i => i.ItemId == loggedInRoboDexerId).ToList();
+
+            return View(myItemsList);
         }
     }
 }
