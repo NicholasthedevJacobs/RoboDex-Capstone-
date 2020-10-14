@@ -172,11 +172,11 @@ namespace RoboDex__Capstone_.Controllers
             _repo.Tags.Create(tags);
             _repo.Save();
 
-            LocationPlace location = new LocationPlace();
-            location.MainLocation = itemTagsLocation.Location.MainLocation;
-            location.SecondaryLocation = itemTagsLocation.Location.SecondaryLocation;
+            LocationPlace locationPlace = new LocationPlace();
+            locationPlace.MainLocation = itemTagsLocation.LocationPlace.MainLocation;
+            locationPlace.SecondaryLocation = itemTagsLocation.LocationPlace.SecondaryLocation;
 
-            _repo.LocationPlace.Create(location);
+            _repo.LocationPlace.Create(locationPlace);
 
             return RedirectToAction("Index");
          /*   return View(itemTag)*/;
