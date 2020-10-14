@@ -37,7 +37,9 @@ namespace RoboDex__Capstone_.Controllers
         // GET: RoboDexerController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var roboDexerUser = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
+            return View(roboDexerUser);
         }
 
         // GET: RoboDexerController/Create
@@ -56,6 +58,9 @@ namespace RoboDex__Capstone_.Controllers
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 robodexer.IdentityUserId = userId;
+                robodexer.InboxId = robodexer.RoboDexerId;
+                robodexer.InventoryId = robodexer.RoboDexerId;
+                robodexer.ShoppingCartId = robodexer.RoboDexerId;
 
                 _repo.RoboDexer.Create(robodexer);
                 _repo.Save();
@@ -113,6 +118,20 @@ namespace RoboDex__Capstone_.Controllers
             {
                 return View();
             }
+        }
+
+        public IActionResult GetInventory(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInRoboDexer = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
+            var inventory = _repo.RoboDexer.FindByCondition(r => r.InventoryId == loggedInRoboDexer.InventoryId).SingleOrDefault();
+            
+            return View(inventory);
         }
     }
 }
