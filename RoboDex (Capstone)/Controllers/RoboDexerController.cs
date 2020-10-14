@@ -58,16 +58,17 @@ namespace RoboDex__Capstone_.Controllers
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 robodexer.IdentityUserId = userId;
-                robodexer.InboxId = robodexer.RoboDexerId;
-                robodexer.InventoryId = robodexer.RoboDexerId;
-                robodexer.ShoppingCartId = robodexer.RoboDexerId;
+                
 
                 _repo.RoboDexer.Create(robodexer);
                 _repo.Save();
             }
-            
 
 
+            robodexer.InboxId = robodexer.RoboDexerId;
+            robodexer.InventoryId = robodexer.RoboDexerId;
+            robodexer.ShoppingCartId = robodexer.RoboDexerId;
+            _repo.Save();
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -120,7 +121,7 @@ namespace RoboDex__Capstone_.Controllers
             }
         }
 
-        public IActionResult GetInventory(int id)
+        public IActionResult Inventory(int id)
         {
             if (id == null)
             {
@@ -129,8 +130,9 @@ namespace RoboDex__Capstone_.Controllers
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var loggedInRoboDexer = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
-            var inventory = _repo.RoboDexer.FindByCondition(r => r.InventoryId == loggedInRoboDexer.InventoryId).SingleOrDefault();
-            
+            var inventoryId = _repo.RoboDexer.FindByCondition(r => r.InventoryId == loggedInRoboDexer.InventoryId).SingleOrDefault();
+            var inventory = _repo.Inventory.FindByCondition(r => r.InventoryId == id).SingleOrDefault();
+
             return View(inventory);
         }
     }

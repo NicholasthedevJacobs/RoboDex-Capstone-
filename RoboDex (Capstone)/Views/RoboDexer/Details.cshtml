@@ -9,7 +9,8 @@
 <head>
     <title>Title of the document</title>
 </head>
-<a class="nav-link text-dark" asp-area="" asp-controller="RoboDexer" asp-action="GetInventory">Inventory</a>
+<a asp-controller="RoboDexer" asp-action="Inventory" asp-route-id="@Model.InventoryId">Inventory</a>
+
 
 </html>
 <div>
@@ -73,6 +74,7 @@
     </dl>
 </div>
 <div>
+    <a asp-action="Inventory" asp-route-id="@Model.InventoryId">Inventory</a> |
     <a asp-action="Edit" asp-route-id="@Model.RoboDexerId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

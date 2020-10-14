@@ -10,8 +10,8 @@ using RoboDex__Capstone_.Data;
 namespace RoboDex__Capstone_.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201013190139_jaf")]
-    partial class jaf
+    [Migration("20201014152528_fa")]
+    partial class fa
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,8 +50,8 @@ namespace RoboDex__Capstone_.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8676fbb2-ce82-45c6-9aa2-4daa087ff6a3",
-                            ConcurrencyStamp = "b5b4569f-03a9-46ab-a606-32dd606c6fb5",
+                            Id = "5087ff7f-139e-4516-9770-f9532d325198",
+                            ConcurrencyStamp = "ded2d54d-74f5-4b48-9432-8ea8eb7f5497",
                             Name = "RoboDexer",
                             NormalizedName = "ROBODEXER"
                         });
