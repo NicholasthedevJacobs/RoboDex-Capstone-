@@ -139,10 +139,25 @@ namespace RoboDex__Capstone_.Controllers
             return View(myItemsList);
         }
 
-        //public IActionResult AddItem()
-        //{
-        //    Items newItem = new Items();
+        public IActionResult AddItem()
+        {
+            Items items = new Items();
+            return View(items);     
+        }
 
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddItem(Items items)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInRoboDexer = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
+
+            _repo.Items.Create(items);
+            _repo.Save();
+
+            return View(items);
+        }
+
+
     }
 }
