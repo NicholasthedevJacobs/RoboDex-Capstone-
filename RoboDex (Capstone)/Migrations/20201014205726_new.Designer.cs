@@ -10,8 +10,8 @@ using RoboDex__Capstone_.Data;
 namespace RoboDex__Capstone_.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201014170352_hasdf")]
-    partial class hasdf
+    [Migration("20201014205726_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,8 +50,8 @@ namespace RoboDex__Capstone_.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "29f4323b-2b28-4207-ba47-f8658f50fa4e",
-                            ConcurrencyStamp = "4aa5de55-93e7-40fa-ab7e-f1995c94b7b3",
+                            Id = "6f45ba3d-417c-4ca0-89ba-8ad8706f664f",
+                            ConcurrencyStamp = "1afd6444-bc43-4595-b66d-9180c03ecbda",
                             Name = "RoboDexer",
                             NormalizedName = "ROBODEXER"
                         });
@@ -304,7 +304,7 @@ namespace RoboDex__Capstone_.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("RoboDex__Capstone_.Models.Location", b =>
+            modelBuilder.Entity("RoboDex__Capstone_.Models.LocationPlace", b =>
                 {
                     b.Property<int>("LocationId")
                         .ValueGeneratedOnAdd()
@@ -319,7 +319,7 @@ namespace RoboDex__Capstone_.Migrations
 
                     b.HasKey("LocationId");
 
-                    b.ToTable("Location");
+                    b.ToTable("LocationPlace");
                 });
 
             modelBuilder.Entity("RoboDex__Capstone_.Models.RoboDexer", b =>

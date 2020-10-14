@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RoboDex__Capstone_.Migrations
 {
-    public partial class hasdf : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -105,7 +105,7 @@ namespace RoboDex__Capstone_.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Location",
+                name: "LocationPlace",
                 columns: table => new
                 {
                     LocationId = table.Column<int>(nullable: false)
@@ -115,7 +115,7 @@ namespace RoboDex__Capstone_.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Location", x => x.LocationId);
+                    table.PrimaryKey("PK_LocationPlace", x => x.LocationId);
                 });
 
             migrationBuilder.CreateTable(
@@ -281,7 +281,7 @@ namespace RoboDex__Capstone_.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "29f4323b-2b28-4207-ba47-f8658f50fa4e", "4aa5de55-93e7-40fa-ab7e-f1995c94b7b3", "RoboDexer", "ROBODEXER" });
+                values: new object[] { "6f45ba3d-417c-4ca0-89ba-8ad8706f664f", "1afd6444-bc43-4595-b66d-9180c03ecbda", "RoboDexer", "ROBODEXER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -358,7 +358,7 @@ namespace RoboDex__Capstone_.Migrations
                 name: "Items");
 
             migrationBuilder.DropTable(
-                name: "Location");
+                name: "LocationPlace");
 
             migrationBuilder.DropTable(
                 name: "RoboDexer");
