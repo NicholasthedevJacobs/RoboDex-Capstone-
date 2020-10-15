@@ -104,13 +104,21 @@ namespace RoboDex__Capstone_.Controllers
         }
 
         // GET: RoboDexerController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> DeleteItem(int id)
         {
-            return View();
+            var itemTODelete = await _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefaultAsync();
+            
+
+            if(itemTODelete == null)
+            {
+                return NotFound();
+            }
+
+            return View(itemTODelete);
         }
 
         // POST: RoboDexerController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("DeleteItem")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
@@ -132,8 +140,7 @@ namespace RoboDex__Capstone_.Controllers
             {
                 return NotFound();
             }
-
-            
+          
             var allItems = await _repo.Inventory.FindAll().ToListAsync();
             List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
             foreach (Inventory item in allItems)
@@ -150,13 +157,9 @@ namespace RoboDex__Capstone_.Controllers
                     itemTagsLocation.Inventory = item;
                     itemTagsLocation.Items = roboDexerItems;
 
-                    //itemTagsLocation.Inventory = allInventory;
-
-
                 }
                 myItemsList.Add(itemTagsLocation);
             }
-
 
             return View(myItemsList);
         }
@@ -202,14 +205,9 @@ namespace RoboDex__Capstone_.Controllers
             inventory.RoboDexerId = loggedInRoboDexer.RoboDexerId;
             _repo.Inventory.Create(inventory);
             _repo.Save();
-
-           
-
           
             return RedirectToAction("Index");
-         /*   return View(itemTag)*/;
+
         }
-
-
     }
 }
