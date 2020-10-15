@@ -132,23 +132,26 @@ namespace RoboDex__Capstone_.Controllers
                 return NotFound();
             }
 
-            List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
-            ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
+            
             var allItems = _repo.Inventory.FindAll().ToList();
-
-            foreach(Inventory item in allItems)
+            List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
+            foreach (Inventory item in allItems)
             {
-                if(item.RoboDexerId == loggedInRoboDexer.RoboDexerId)
+                ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
+                
+
+                if (item.RoboDexerId == loggedInRoboDexer.RoboDexerId)
                 {
                     var roboDexerItems = _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
 
                     var allInventory = _repo.Inventory.FindByCondition(i => i.ItemId == roboDexerItems.ItemId).SingleOrDefault();
-             
+
                     itemTagsLocation.Inventory = item;
                     itemTagsLocation.Items = roboDexerItems;
+
                     //itemTagsLocation.Inventory = allInventory;
-                   
-                    
+
+
                 }
                 myItemsList.Add(itemTagsLocation);
             }

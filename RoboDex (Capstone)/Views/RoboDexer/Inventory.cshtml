@@ -18,33 +18,32 @@
             <th>
                 @Html.DisplayNameFor(model => model.Items.IMGUrl)
             </th>
-            
+
         </tr>
     </thead>
-</table>
+
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>                    
-                   @Html.DisplayFor(modelItem => item.Items.Name)
-                </td>             
-                <td>
-                    @Html.DisplayFor(modelItem => item.Items.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Items.IMGUrl)
-                </td>
-               
-                    @*<a asp-action="Edit" asp-route-id="@item.Items.ItemId">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Items.ItemId">Delete</a> |*@
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Items.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Items.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Items.IMGUrl)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Items.ItemId">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Items.ItemId">Delete</a> |
+              
+            </td>
 
-               
-            </tr>
+
+        </tr>
         }
     </tbody>
-   
-    <div>
-        @*<a asp-action="Edit" asp-route-id="@Model.ItemId">Edit</a> |*@
-        <a asp-action="Index">Back to List</a>
-    </div>
+</table>
+    
