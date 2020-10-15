@@ -135,6 +135,7 @@ namespace RoboDex__Capstone_.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var loggedInRoboDexer =  await _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefaultAsync();
+            List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
             if (id == null)
             {
                 return NotFound();
@@ -142,42 +143,17 @@ namespace RoboDex__Capstone_.Controllers
             
             if(loggedInRoboDexer.RoboDexerId == id)
             {
-                var myItemsList = FindMyInventory(loggedInRoboDexer);
+                myItemsList = FindMyInventory(loggedInRoboDexer);
                 return View(myItemsList);
             }
             else
             {
-                var inventoryToView = _repo.Inventory.FindByCondition(i => i.InventoryId == id).SingleOrDefault();
 
-                var allItems = await _repo.Inventory.FindAll().ToListAsync();
-                List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
-                foreach (Inventory item in allItems)
-                {
-                    ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
-
-
-                    if (item.RoboDexerId == id)
-                    {
-                        var roboDexerItems = await _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefaultAsync();
-
-                        var allInventory = await _repo.Inventory.FindByCondition(i => i.ItemId == inventoryToView.ItemId).SingleOrDefaultAsync();
-
-                        itemTagsLocation.Inventory = item;
-                        itemTagsLocation.Items = roboDexerItems;
-
-                        myItemsList.Add(itemTagsLocation);
-                    }
-
-                }
+                myItemsList = FindAnotherUserInventory(id);
                 return View(myItemsList);
             }
-
-
-
         }
-
-        
-
+       
         public IActionResult AddItem()
         {
             ItemTagsLocation itemsTagsLocation = new ItemTagsLocation();
@@ -245,6 +221,33 @@ namespace RoboDex__Capstone_.Controllers
                     myItemsList.Add(itemTagsLocation);
                 }
 
+            }
+            return myItemsList;
+        }
+
+        private List<ItemTagsLocation> FindAnotherUserInventory(int? id)
+        {
+            var inventoryToView = _repo.Inventory.FindByCondition(i => i.InventoryId == id).SingleOrDefault();
+
+            var allItems = _repo.Inventory.FindAll().ToList();
+            List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
+            foreach (Inventory item in allItems)
+            {
+                ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
+
+
+                if (item.RoboDexerId == id)
+                {
+                    var roboDexerItems =  _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+
+                    var allInventory =  _repo.Inventory.FindByCondition(i => i.ItemId == inventoryToView.ItemId).SingleOrDefault();
+
+                    itemTagsLocation.Inventory = item;
+                    itemTagsLocation.Items = roboDexerItems;
+
+                    myItemsList.Add(itemTagsLocation);
+                }
+                
             }
             return myItemsList;
         }
