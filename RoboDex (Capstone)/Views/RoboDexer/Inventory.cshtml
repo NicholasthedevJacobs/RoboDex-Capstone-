@@ -5,6 +5,16 @@
 }
 
 <h1>Inventory</h1>
+
+<form asp-controller="RoboDexer" asp-action="Search">
+
+    <p>
+        <div class="form-inline">
+            <input class="form-control mr-sm-2" type="text" style=" width: 50%;" name="SearchTerm">
+            <input class="btn btn-primary my-sm-0" type="submit" value="Search" />
+        </div>
+    </p>
+</form>
 <a asp-controller="RoboDexer" asp-action="AddItem" >Add Item</a>
 <table class="table">
     <thead>

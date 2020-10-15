@@ -45,6 +45,12 @@ namespace RoboDex__Capstone_.Controllers
             return View(roboDexerUser);
         }
 
+        public ActionResult ItemDetails (int id)
+        {
+            var item = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
+            return View(item);
+        }
+
         // GET: RoboDexerController/Create
         public ActionResult Create()
         {
@@ -152,6 +158,38 @@ namespace RoboDex__Capstone_.Controllers
                 myItemsList = FindAnotherUserInventory(id);
                 return View(myItemsList);
             }
+        }
+
+        public IActionResult Search(string searchTerm)
+        {
+            var allTags =  _repo.Tags.FindAll();
+            var allItems = _repo.Items.FindAll();
+
+            List<ItemTagsLocation> searchList = new List<ItemTagsLocation>();
+            //foreach(Items item in allItems)
+            //{
+            //    ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
+            //    itemTagsLocation.Items = item;
+            //    searchList.Add(itemTagsLocation);
+            //}
+            foreach(Tags tag in allTags)
+            {
+                ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
+                itemTagsLocation.Tags = tag;
+                searchList.Add(itemTagsLocation);
+            }
+            if (!String.IsNullOrEmpty(searchTerm))
+            {
+                allItems = allItems.Where(a => a.Name.Contains(searchTerm));
+
+            }
+
+            //if (!String.IsNullOrEmpty(searchTerm))
+            //{
+            //    allTags = allTags.Where(a => a.Name.Contains(searchTerm));
+                
+            //}
+            return View(allItems.ToList());
         }
        
         public IActionResult AddItem()

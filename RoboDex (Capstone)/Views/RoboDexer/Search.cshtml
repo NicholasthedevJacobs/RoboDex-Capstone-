@@ -1,0 +1,64 @@
+﻿@model IEnumerable<RoboDex__Capstone_.Models.Items>
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search</h1>
+
+<form asp-controller="Recipes" asp-action="Search" method="get">
+
+<p>
+    <div class="form-inline">
+        <input class="form-control mr-sm-2" type="text" style=" width: 50%;" name="SearchString">
+        <input class="btn btn-primary my-sm-0" type="submit" value="Search" />
+    </div>
+</p>
+</form>
+
+<table class="table container">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.IMGUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="container">
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ItemId" color: rgb(13,10,77)">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IMGUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+
+            <td>
+
+
+                <a asp-action="ItemDetails" asp-route-id="@item.ItemId">Details</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model.ItemId">Edit</a> |
+        <a asp-action="Index">Back to List</a>*@
+</div>
