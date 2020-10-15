@@ -125,18 +125,34 @@ namespace RoboDex__Capstone_.Controllers
 
         public IActionResult Inventory(int id)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInRoboDexer =  _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
             if (id == null)
             {
                 return NotFound();
             }
 
-            List<Items> myItemsList = new List<Items>();
+            List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
+            ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
+            var allItems = _repo.Inventory.FindAll().ToList();
 
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            foreach(Inventory item in allItems)
+            {
+                if(item.RoboDexerId == loggedInRoboDexer.RoboDexerId)
+                {
+                    var roboDexerItems = _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
 
-            var loggedInRoboDexer = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
-            var loggedInRoboDexerId = loggedInRoboDexer.RoboDexerId;
-            myItemsList = _repo.Items.FindByCondition(i => i.ItemId == loggedInRoboDexerId).ToList();
+                    var allInventory = _repo.Inventory.FindByCondition(i => i.ItemId == roboDexerItems.ItemId).SingleOrDefault();
+             
+                    itemTagsLocation.Inventory = item;
+                    itemTagsLocation.Items = roboDexerItems;
+                    //itemTagsLocation.Inventory = allInventory;
+                   
+                    
+                }
+                myItemsList.Add(itemTagsLocation);
+            }
+
 
             return View(myItemsList);
         }
