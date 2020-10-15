@@ -208,15 +208,24 @@ namespace RoboDex__Capstone_.Controllers
             {
                 ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
 
+                var roboDexerItems = _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+
+                if (roboDexerItems == null)
+                {
+                    continue;
+                }
 
                 if (item.RoboDexerId == loggedInRoboDexer.RoboDexerId)
                 {
-                    var roboDexerItems =  _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+                   
 
                     var allInventory =  _repo.Inventory.FindByCondition(i => i.ItemId == roboDexerItems.ItemId).SingleOrDefault();
 
+                    var tags = _repo.Tags.FindByCondition(i => i.TagId == roboDexerItems.TagId).SingleOrDefault();
+                    
                     itemTagsLocation.Inventory = item;
                     itemTagsLocation.Items = roboDexerItems;
+                    itemTagsLocation.Tags = tags;
 
                     myItemsList.Add(itemTagsLocation);
                 }
@@ -234,16 +243,24 @@ namespace RoboDex__Capstone_.Controllers
             foreach (Inventory item in allItems)
             {
                 ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
-
+                
 
                 if (item.RoboDexerId == id)
                 {
                     var roboDexerItems =  _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
 
+                    if(roboDexerItems == null)
+                    {
+                        continue;
+                    }
+
                     var allInventory =  _repo.Inventory.FindByCondition(i => i.ItemId == inventoryToView.ItemId).SingleOrDefault();
+
+                    var tags = _repo.Tags.FindByCondition(i => i.TagId == roboDexerItems.TagId).SingleOrDefault();
 
                     itemTagsLocation.Inventory = item;
                     itemTagsLocation.Items = roboDexerItems;
+                    itemTagsLocation.Tags = tags;
 
                     myItemsList.Add(itemTagsLocation);
                 }

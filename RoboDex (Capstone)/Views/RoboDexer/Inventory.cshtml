@@ -18,6 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Items.IMGUrl)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tags.Name)
+            </th>
 
         </tr>
     </thead>
@@ -36,9 +39,12 @@
                 @Html.DisplayFor(modelItem => item.Items.IMGUrl)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Tags.Name)
+            </td>
+            <td>
                 @*<a asp-action="Edit" asp-route-id="@item.Items.ItemId">Edit</a> |*@
                 @*<a asp-action="DeleteItem" asp-route-id="@item.Items.ItemId">Delete</a> |*@
-              
+
             </td>
 
 
