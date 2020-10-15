@@ -120,16 +120,15 @@ namespace RoboDex__Capstone_.Controllers
         // POST: RoboDexerController/Delete/5
         [HttpPost, ActionName("DeleteItem")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var itemToDelete = await _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefaultAsync();
+            _repo.Items.Delete(itemToDelete);
+            _repo.Save();
+
+            
+            return RedirectToAction(nameof(Index));
+           
         }
 
         public async Task<IActionResult> Inventory(int? id)
