@@ -156,8 +156,9 @@ namespace RoboDex__Capstone_.Controllers
                     itemTagsLocation.Inventory = item;
                     itemTagsLocation.Items = roboDexerItems;
 
+                    myItemsList.Add(itemTagsLocation);
                 }
-                myItemsList.Add(itemTagsLocation);
+               
             }
 
             return View(myItemsList);
