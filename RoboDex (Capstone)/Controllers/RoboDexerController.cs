@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.Language.Extensions;
 using Microsoft.EntityFrameworkCore;
 using RoboDex__Capstone_.Contracts;
 using RoboDex__Capstone_.Models;
@@ -123,17 +124,17 @@ namespace RoboDex__Capstone_.Controllers
             }
         }
 
-        public IActionResult Inventory(int id)
+        public async Task<IActionResult> Inventory(int? id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var loggedInRoboDexer =  _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
+            var loggedInRoboDexer =  await _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefaultAsync();
             if (id == null)
             {
                 return NotFound();
             }
 
             
-            var allItems = _repo.Inventory.FindAll().ToList();
+            var allItems = await _repo.Inventory.FindAll().ToListAsync();
             List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
             foreach (Inventory item in allItems)
             {
@@ -142,9 +143,9 @@ namespace RoboDex__Capstone_.Controllers
 
                 if (item.RoboDexerId == loggedInRoboDexer.RoboDexerId)
                 {
-                    var roboDexerItems = _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+                    var roboDexerItems = await _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefaultAsync();
 
-                    var allInventory = _repo.Inventory.FindByCondition(i => i.ItemId == roboDexerItems.ItemId).SingleOrDefault();
+                    var allInventory = await _repo.Inventory.FindByCondition(i => i.ItemId == roboDexerItems.ItemId).SingleOrDefaultAsync();
 
                     itemTagsLocation.Inventory = item;
                     itemTagsLocation.Items = roboDexerItems;
