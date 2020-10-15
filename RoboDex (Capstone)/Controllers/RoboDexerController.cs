@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.Language.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using RoboDex__Capstone_.Contracts;
 using RoboDex__Capstone_.Models;
 using RoboDex__Capstone_.Models.ViewModels;
@@ -164,32 +165,45 @@ namespace RoboDex__Capstone_.Controllers
         {
             var allTags =  _repo.Tags.FindAll();
             var allItems = _repo.Items.FindAll();
-
-            List<ItemTagsLocation> searchList = new List<ItemTagsLocation>();
-            //foreach(Items item in allItems)
-            //{
-            //    ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
-            //    itemTagsLocation.Items = item;
-            //    searchList.Add(itemTagsLocation);
-            //}
-            foreach(Tags tag in allTags)
-            {
-                ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
-                itemTagsLocation.Tags = tag;
-                searchList.Add(itemTagsLocation);
-            }
+            
+           
             if (!String.IsNullOrEmpty(searchTerm))
             {
                 allItems = allItems.Where(a => a.Name.Contains(searchTerm));
 
             }
 
-            //if (!String.IsNullOrEmpty(searchTerm))
-            //{
-            //    allTags = allTags.Where(a => a.Name.Contains(searchTerm));
-                
-            //}
-            return View(allItems.ToList());
+            if (!String.IsNullOrEmpty(searchTerm))
+            {
+                allTags = allTags.Where(a => a.Name.Contains(searchTerm));
+
+            }
+           
+            //Here I need to remove duplicate items when comparing allItems/allTags, then add remaining items to final list.
+            ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
+            List<ItemTagsLocation> list1 = new List<ItemTagsLocation>();
+            List<ItemTagsLocation> list2 = new List<ItemTagsLocation>();
+
+
+            foreach (Tags tag in allTags)
+            {
+                itemTagsLocation.Tags = tag;
+                list1.Add(itemTagsLocation);
+            }
+            foreach (Items item in allItems)
+            {
+                if(item.TagId == itemTagsLocation.Tags.TagId)
+                {
+                    continue;
+                }
+
+                itemTagsLocation.Items = item;
+                list1.Add(itemTagsLocation);
+            }
+
+            
+
+            return View(list1);
         }
        
         public IActionResult AddItem()
