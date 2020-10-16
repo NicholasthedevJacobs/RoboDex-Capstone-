@@ -165,44 +165,29 @@ namespace RoboDex__Capstone_.Controllers
         {
             var allTags =  _repo.Tags.FindAll();
             var allItems = _repo.Items.FindAll();
-            
-           
+                       
             if (!String.IsNullOrEmpty(searchTerm))
             {
                 allItems = allItems.Where(a => a.Name.Contains(searchTerm));
-
             }
 
             if (!String.IsNullOrEmpty(searchTerm))
             {
                 allTags = allTags.Where(a => a.Name.Contains(searchTerm));
-
             }
-           
-            //Here I need to remove duplicate items when comparing allItems/allTags, then add remaining items to final list.
-            //ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
             List<ItemsTagsInfo> listOfAllItems = new List<ItemsTagsInfo>();
-            //List<ItemTagsLocation> list2 = new List<ItemTagsLocation>();
 
-
+            //Here I am adding the item, and tag name and tag id into a single ItemTagsInfo object.
             foreach (Tags tag in allTags)
             {
-                ItemsTagsInfo itemTagsLocation = new ItemsTagsInfo();
+                ItemsTagsInfo itemTagsInfo = new ItemsTagsInfo();
 
-                itemTagsLocation.TagName = tag.Name;
-                itemTagsLocation.TagId = tag.TagId;
-                listOfAllItems.Add(itemTagsLocation);
+                itemTagsInfo.TagName = tag.Name;
+                itemTagsInfo.TagId = tag.TagId;
+                var doodly = allItems.Where(a => a.TagId == tag.TagId).SingleOrDefault();
+                itemTagsInfo.Items = doodly;
+                listOfAllItems.Add(itemTagsInfo);                              
             }
-            foreach (Items item in allItems)
-            {
-                ItemsTagsInfo itemTagsLocation = new ItemsTagsInfo();
-                
-                itemTagsLocation.Items = item;
-                listOfAllItems.Add(itemTagsLocation);
-            }
-            //need to add the list of tags into items, so the view can see it
-            
-
             return View(listOfAllItems);
         }
        
