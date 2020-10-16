@@ -1,0 +1,57 @@
+﻿@model RoboDex__Capstone_.Models.ViewModels.ItemTagsLocation
+
+@{
+    ViewData["Title"] = "EditItem";
+}
+
+<h1>EditItem</h1>
+
+<h4>Items</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditItem">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Items.ItemId" />
+
+            <div class="form-group">
+                <label asp-for="Items.IMGUrl" class="control-label"></label>
+                <input asp-for="Items.IMGUrl" class="form-control" />
+                <span asp-validation-for="Items.IMGUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Items.Name" class="control-label"></label>
+                <input asp-for="Items.Name" class="form-control" />
+                <span asp-validation-for="Items.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Items.Price" class="control-label"></label>
+                <input asp-for="Items.Price" class="form-control" />
+                <span asp-validation-for="Items.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocationPlace.MainLocation" class="control-label"></label>
+                <input asp-for="LocationPlace.MainLocation" class="form-control" />
+                <span asp-validation-for="LocationPlace.MainLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocationPlace.SecondaryLocation" class="control-label"></label>
+                <input asp-for="LocationPlace.SecondaryLocation" class="form-control" />
+                <span asp-validation-for="LocationPlace.SecondaryLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tags.Name" class="control-label"></label>
+                <input asp-for="Tags.Name" class="form-control" />
+                <span asp-validation-for="Tags.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

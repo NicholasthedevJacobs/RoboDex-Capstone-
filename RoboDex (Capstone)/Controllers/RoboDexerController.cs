@@ -87,10 +87,20 @@ namespace RoboDex__Capstone_.Controllers
         }
 
         // GET: RoboDexerController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EditItem(int id)
         {
+            ItemTagsLocation itemToEnterIntoView = new ItemTagsLocation();
+
             var itemToEdit = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
-            return View(itemToEdit);
+            itemToEnterIntoView.Items = itemToEdit;
+
+            var locationToEdit = _repo.LocationPlace.FindByCondition(l => l.LocationId == itemToEdit.LocationId).SingleOrDefault();
+            itemToEnterIntoView.LocationPlace = locationToEdit;
+
+            var tagsToEdit = _repo.Tags.FindByCondition(t => t.TagId == itemToEdit.TagId).SingleOrDefault();
+            itemToEnterIntoView.Tags = tagsToEdit;
+
+            return View(itemToEnterIntoView);
         }
 
         // POST: RoboDexerController/Edit/5
