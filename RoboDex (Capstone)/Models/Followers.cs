@@ -14,5 +14,6 @@ namespace RoboDex__Capstone_.Models
         [ForeignKey("RoboDexer")]
         public int FollowerId { get; set; }
 
+        //Maybe Add UserName property here
     }
 }

@@ -153,10 +153,22 @@ namespace RoboDex__Capstone_.Controllers
             return RedirectToAction(nameof(Index));         
         }
 
-        //public ActionResult Follow(int id)
-        //{
+        public ActionResult Follow(int id)
+        {
+            var loggedInRoboDexer = FindLoggedInRoboDexer();
+            var selectedInventory = _repo.Inventory.FindByCondition(i => i.InventoryId == id).SingleOrDefault();
+            var roboDexerToFollow = _repo.RoboDexer.FindByCondition(r => r.InventoryId == selectedInventory.InventoryId).SingleOrDefault();
 
-        //}
+            Followers follower = new Followers();
+
+            follower.RoboDexerId = roboDexerToFollow.RoboDexerId;
+            follower.FollowerId = loggedInRoboDexer.RoboDexerId;
+
+            _repo.Followers.Create(follower);
+            _repo.Save();
+
+            return RedirectToAction(nameof(Followers));
+        }
 
         public async Task<IActionResult> Inventory(int? id)
         {
