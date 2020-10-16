@@ -143,6 +143,7 @@ namespace RoboDex__Capstone_.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var loggedInRoboDexer =  await _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefaultAsync();
             List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
+            List<ItemsTagsInfo> itemsTagsInfo = new List<ItemsTagsInfo>();
             if (id == null)
             {
                 return NotFound();
@@ -152,6 +153,11 @@ namespace RoboDex__Capstone_.Controllers
             {
                 myItemsList = FindMyInventory(loggedInRoboDexer);
                 return View(myItemsList);
+            }
+            else
+            {
+                return RedirectToAction("SellerInventory", new { id });
+                
             }
 
             return View(myItemsList);
