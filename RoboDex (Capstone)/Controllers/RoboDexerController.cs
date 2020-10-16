@@ -69,11 +69,9 @@ namespace RoboDex__Capstone_.Controllers
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 robodexer.IdentityUserId = userId;
                 
-
                 _repo.RoboDexer.Create(robodexer);
                 _repo.Save();
             }
-
 
             robodexer.InboxId = robodexer.RoboDexerId;
             robodexer.InventoryId = robodexer.RoboDexerId;
@@ -115,7 +113,6 @@ namespace RoboDex__Capstone_.Controllers
         {
             var itemTODelete = await _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefaultAsync();
             
-
             if(itemTODelete == null)
             {
                 return NotFound();
@@ -132,10 +129,8 @@ namespace RoboDex__Capstone_.Controllers
             var itemToDelete = await _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefaultAsync();
             _repo.Items.Delete(itemToDelete);
             _repo.Save();
-
-            
-            return RedirectToAction(nameof(Index));
-           
+         
+            return RedirectToAction(nameof(Index));         
         }
 
         public async Task<IActionResult> Inventory(int? id)
@@ -156,12 +151,8 @@ namespace RoboDex__Capstone_.Controllers
             }
             else
             {
-                return RedirectToAction("SellerInventory", new { id });
-                
+                return RedirectToAction("SellerInventory", new { id });               
             }
-
-            return View(myItemsList);
-
         }
 
         public async Task<IActionResult> SellerInventory(int? id)
@@ -175,8 +166,7 @@ namespace RoboDex__Capstone_.Controllers
             }
          
             myItemsList = FindAnotherUserInventory(id);
-            return View(myItemsList);
-            
+            return View(myItemsList);           
         }
 
         public IActionResult Search(string searchTerm)
@@ -252,7 +242,6 @@ namespace RoboDex__Capstone_.Controllers
             _repo.Save();
           
             return RedirectToAction("Index");
-
         }
 
         private List<ItemTagsLocation> FindMyInventory(RoboDexer loggedInRoboDexer)
@@ -271,9 +260,7 @@ namespace RoboDex__Capstone_.Controllers
                 }
 
                 if (item.RoboDexerId == loggedInRoboDexer.RoboDexerId)
-                {
-                   
-
+                {                   
                     var allInventory =  _repo.Inventory.FindByCondition(i => i.ItemId == roboDexerItems.ItemId).SingleOrDefault();
 
                     var tags = _repo.Tags.FindByCondition(i => i.TagId == roboDexerItems.TagId).SingleOrDefault();
@@ -285,10 +272,8 @@ namespace RoboDex__Capstone_.Controllers
                     itemTagsLocation.Tags = tags;
                     itemTagsLocation.LocationPlace = location;
                     
-
                     myItemsList.Add(itemTagsLocation);
                 }
-
             }
             return myItemsList;
         }
@@ -303,7 +288,6 @@ namespace RoboDex__Capstone_.Controllers
             {
                 ItemsTagsInfo itemTagsLocation = new ItemsTagsInfo();
                 
-
                 if (item.RoboDexerId == id)
                 {
                     var roboDexerItems =  _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
@@ -316,14 +300,12 @@ namespace RoboDex__Capstone_.Controllers
                     var allInventory =  _repo.Inventory.FindByCondition(i => i.ItemId == inventoryToView.ItemId).SingleOrDefault();
 
                     var tags = _repo.Tags.FindByCondition(i => i.TagId == roboDexerItems.TagId).SingleOrDefault();
-
                     
                     itemTagsLocation.Items = roboDexerItems;
                     itemTagsLocation.TagName = tags.Name;
 
                     myItemsList.Add(itemTagsLocation);
-                }
-                
+                }                
             }
             return myItemsList;
         }
