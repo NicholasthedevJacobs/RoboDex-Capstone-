@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RoboDex__Capstone_.Models.ViewModels.ItemTagsLocation>
+﻿@model IEnumerable<RoboDex__Capstone_.Models.ViewModels.ItemsTagsInfo>
 
 @{
     ViewData["Title"] = "Search";
@@ -36,9 +36,13 @@
     <tbody class="container">
         @foreach (var item in Model)
         {
+            @if(item.Items == null)
+            {
+                continue;
+            }
         <tr>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Items.ItemId">
+                <a @*asp-action="Details" asp-route-id="@item.Items.ItemId"*@>
                     @Html.DisplayFor(modelItem => item.Items.Name)
                 </a>
             </td>
@@ -52,7 +56,7 @@
             <td>
 
 
-                <a asp-action="ItemDetails" asp-route-id="@item.Items.ItemId">Details</a>
+                <a @*asp-action="ItemDetails" asp-route-id="@item.Items.ItemId"*@>Details</a>
             </td>
         </tr>
         }

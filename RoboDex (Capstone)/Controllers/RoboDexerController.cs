@@ -180,30 +180,30 @@ namespace RoboDex__Capstone_.Controllers
             }
            
             //Here I need to remove duplicate items when comparing allItems/allTags, then add remaining items to final list.
-            ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
-            List<ItemTagsLocation> list1 = new List<ItemTagsLocation>();
-            List<ItemTagsLocation> list2 = new List<ItemTagsLocation>();
+            //ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
+            List<ItemsTagsInfo> listOfAllItems = new List<ItemsTagsInfo>();
+            //List<ItemTagsLocation> list2 = new List<ItemTagsLocation>();
 
 
             foreach (Tags tag in allTags)
             {
-                itemTagsLocation.Tags = tag;
-                list1.Add(itemTagsLocation);
+                ItemsTagsInfo itemTagsLocation = new ItemsTagsInfo();
+
+                itemTagsLocation.TagName = tag.Name;
+                itemTagsLocation.TagId = tag.TagId;
+                listOfAllItems.Add(itemTagsLocation);
             }
             foreach (Items item in allItems)
             {
-                if(item.TagId == itemTagsLocation.Tags.TagId)
-                {
-                    continue;
-                }
-
+                ItemsTagsInfo itemTagsLocation = new ItemsTagsInfo();
+                
                 itemTagsLocation.Items = item;
-                list1.Add(itemTagsLocation);
+                listOfAllItems.Add(itemTagsLocation);
             }
-
+            //need to add the list of tags into items, so the view can see it
             
 
-            return View(list1);
+            return View(listOfAllItems);
         }
        
         public IActionResult AddItem()
