@@ -133,6 +133,11 @@ namespace RoboDex__Capstone_.Controllers
             return RedirectToAction(nameof(Index));         
         }
 
+        public ActionResult Follow(int id)
+        {
+
+        }
+
         public async Task<IActionResult> Inventory(int? id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -308,6 +313,13 @@ namespace RoboDex__Capstone_.Controllers
                 }                
             }
             return myItemsList;
+        }
+
+        private RoboDexer FindLoggedInRoboDexer()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInRoboDexer =  _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
+            return loggedInRoboDexer;
         }
     }
 }
