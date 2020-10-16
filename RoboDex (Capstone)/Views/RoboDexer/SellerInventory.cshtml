@@ -1,0 +1,64 @@
+﻿@model IEnumerable<RoboDex__Capstone_.Models.ViewModels.ItemsTagsInfo>
+
+@{
+    ViewData["Title"] = "SellerInventory";
+}
+
+<h1>SellerInventory</h1>
+
+<div>
+    <h4>Items</h4>
+    <hr />
+    <dl class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Items.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Items.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Items.IMGUrl)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TagName)
+                    </th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Items.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Items.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Items.IMGUrl)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TagName)
+                        </td>
+                        <td>
+                            @*<a asp-action="Edit" asp-route-id="@item.Items.ItemId">Edit</a> |*@
+                            @*<a asp-action="DeleteItem" asp-route-id="@item.Items.ItemId">Delete</a> |*@
+
+                        </td>
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ItemId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
