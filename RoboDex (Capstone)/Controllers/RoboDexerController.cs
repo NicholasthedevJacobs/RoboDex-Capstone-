@@ -27,8 +27,8 @@ namespace RoboDex__Capstone_.Controllers
         // GET: RoboDexerController
         public ActionResult Index()
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var roboDexerUser = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
+
+            var roboDexerUser = FindLoggedInRoboDexer();
             if (roboDexerUser == null)
             {
                 return RedirectToAction("Create");
@@ -40,9 +40,8 @@ namespace RoboDex__Capstone_.Controllers
 
         // GET: RoboDexerController/Details/5
         public ActionResult Details(int id)
-        {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var roboDexerUser = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
+        {            
+            var roboDexerUser = FindLoggedInRoboDexer();
             return View(roboDexerUser);
         }
 
@@ -133,15 +132,14 @@ namespace RoboDex__Capstone_.Controllers
             return RedirectToAction(nameof(Index));         
         }
 
-        public ActionResult Follow(int id)
-        {
+        //public ActionResult Follow(int id)
+        //{
 
-        }
+        //}
 
         public async Task<IActionResult> Inventory(int? id)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var loggedInRoboDexer =  await _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefaultAsync();
+            var loggedInRoboDexer = FindLoggedInRoboDexer();
             List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
             List<ItemsTagsInfo> itemsTagsInfo = new List<ItemsTagsInfo>();
             if (id == null)
@@ -161,9 +159,7 @@ namespace RoboDex__Capstone_.Controllers
         }
 
         public async Task<IActionResult> SellerInventory(int? id)
-        {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var loggedInRoboDexer = await _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefaultAsync();
+        {          
             List<ItemsTagsInfo> myItemsList = new List<ItemsTagsInfo>();
             if (id == null)
             {
@@ -215,8 +211,7 @@ namespace RoboDex__Capstone_.Controllers
         public async Task<IActionResult> AddItem(ItemTagsLocation itemTagsLocation)
         {
             //finds the logged in user
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var loggedInRoboDexer = await _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefaultAsync();
+            var loggedInRoboDexer = FindLoggedInRoboDexer();
 
             //adds the input tag into the tags table
             Tags tags = new Tags();
