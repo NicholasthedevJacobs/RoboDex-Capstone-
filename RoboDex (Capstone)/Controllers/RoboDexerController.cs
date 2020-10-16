@@ -161,6 +161,29 @@ namespace RoboDex__Capstone_.Controllers
             }
         }
 
+        public async Task<IActionResult> SellerInventory(int? id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var loggedInRoboDexer = await _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefaultAsync();
+            List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if (loggedInRoboDexer.RoboDexerId == id)
+            {
+                myItemsList = FindMyInventory(loggedInRoboDexer);
+                return View(myItemsList);
+            }
+            else
+            {
+
+                myItemsList = FindAnotherUserInventory(id);
+                return View(myItemsList);
+            }
+        }
+
         public IActionResult Search(string searchTerm)
         {
             var allTags =  _repo.Tags.FindAll();
@@ -259,10 +282,14 @@ namespace RoboDex__Capstone_.Controllers
                     var allInventory =  _repo.Inventory.FindByCondition(i => i.ItemId == roboDexerItems.ItemId).SingleOrDefault();
 
                     var tags = _repo.Tags.FindByCondition(i => i.TagId == roboDexerItems.TagId).SingleOrDefault();
+
+                    var location = _repo.LocationPlace.FindByCondition(l => l.LocationId == roboDexerItems.LocationId).SingleOrDefault();
                     
                     itemTagsLocation.Inventory = item;
                     itemTagsLocation.Items = roboDexerItems;
                     itemTagsLocation.Tags = tags;
+                    itemTagsLocation.LocationPlace = location;
+                    
 
                     myItemsList.Add(itemTagsLocation);
                 }
