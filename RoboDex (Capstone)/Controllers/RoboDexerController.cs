@@ -89,13 +89,14 @@ namespace RoboDex__Capstone_.Controllers
         // GET: RoboDexerController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var itemToEdit = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
+            return View(itemToEdit);
         }
 
         // POST: RoboDexerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id)
         {
             try
             {

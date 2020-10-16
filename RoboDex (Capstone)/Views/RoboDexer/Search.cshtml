@@ -4,16 +4,16 @@
     ViewData["Title"] = "Search";
 }
 
-<h1>Search</h1>
+<h1>Search Results</h1>
 
 <form asp-controller="Recipes" asp-action="Search" method="get">
 
-<p>
+@*<p>
     <div class="form-inline">
         <input class="form-control mr-sm-2" type="text" style=" width: 50%;" name="SearchString">
         <input class="btn btn-primary my-sm-0" type="submit" value="Search" />
     </div>
-</p>
+</p>*@
 </form>
 
 <table class="table container">
@@ -62,7 +62,7 @@
             <td>
 
 
-                <a @*asp-action="ItemDetails" asp-route-id="@item.Items.ItemId"*@>Details</a>
+                <a asp-action="ItemDetails" asp-route-id="@item.Items.ItemId">Details</a>
             </td>
         </tr>
         }
