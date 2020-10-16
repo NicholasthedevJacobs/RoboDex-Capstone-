@@ -4,7 +4,7 @@
     ViewData["Title"] = "EditItem";
 }
 
-<h1>EditItem</h1>
+<h1>Edit Your Item</h1>
 
 <h4>Items</h4>
 <hr />
@@ -44,6 +44,9 @@
                 <input asp-for="Tags.Name" class="form-control" />
                 <span asp-validation-for="Tags.Name" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="Items.ItemId" class="form-control" />
+            <input type="hidden" asp-for="Items.TagId" class="form-control" />
+            <input type="hidden" asp-for="Items.LocationId" class="form-control" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

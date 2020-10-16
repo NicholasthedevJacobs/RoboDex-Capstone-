@@ -104,10 +104,20 @@ namespace RoboDex__Capstone_.Controllers
         }
 
         // POST: RoboDexerController/Edit/5
-        [HttpPost]
+        [HttpPost, ActionName("EditItem")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id)
+        public ActionResult EditTheItem(int id, ItemTagsLocation itemTagsLocation)
         {
+            var itemToEdit = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
+            itemToEdit = itemTagsLocation.Items;
+
+            var locationToEdit = _repo.LocationPlace.FindByCondition(l => l.LocationId == itemToEdit.LocationId).SingleOrDefault();
+            locationToEdit = itemTagsLocation.LocationPlace;
+
+            var tagsToEdit = _repo.Tags.FindByCondition(t => t.TagId == itemToEdit.TagId).SingleOrDefault();
+            tagsToEdit = itemTagsLocation.Tags;
+
+            _repo.Save();
             try
             {
                 return RedirectToAction(nameof(Index));
