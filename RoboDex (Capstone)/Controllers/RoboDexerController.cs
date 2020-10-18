@@ -40,9 +40,18 @@ namespace RoboDex__Capstone_.Controllers
 
         // GET: RoboDexerController/Details/5
         public ActionResult Details(int id)
-        {            
-            var roboDexerUser = FindLoggedInRoboDexer();
-            return View(roboDexerUser);
+        {
+            if(id == 0)
+            {
+                var roboDexerUser = FindLoggedInRoboDexer();
+                return View(roboDexerUser);
+            }
+
+            var item = _repo.Items.FindByCondition(i => i.ItemId == id).FirstOrDefault();
+            var inventory = _repo.Inventory.FindByCondition(l => l.ItemId == item.ItemId).SingleOrDefault();
+            var roboDexer = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == inventory.RoboDexerId).SingleOrDefault();
+                   
+            return View(roboDexer);
         }
 
         public ActionResult ItemDetails (int id)
