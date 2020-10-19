@@ -198,6 +198,20 @@ namespace RoboDex__Capstone_.Controllers
             }
             return View(followedRoboDexers);
         }
+
+        public ActionResult Followers()
+        {
+            var loggedInRoboDexer = FindLoggedInRoboDexer();
+            List<RoboDexer> roboDexersThatFollow = new List<RoboDexer>();
+            var dexersFollow = _repo.Followers.FindByCondition(f => f.RoboDexerId == loggedInRoboDexer.RoboDexerId).ToList();
+            foreach(Followers follower in dexersFollow)
+            {
+                var followedRoboDexer = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == follower.RoboDexerId).SingleOrDefault();
+                roboDexersThatFollow.Add(followedRoboDexer);
+            }
+            return View(roboDexersThatFollow);
+        }
+
         public ActionResult Inventory(int? id)
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
