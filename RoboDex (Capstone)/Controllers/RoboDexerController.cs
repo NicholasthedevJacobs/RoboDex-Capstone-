@@ -69,14 +69,16 @@ namespace RoboDex__Capstone_.Controllers
             }
             else
             {
-                return RedirectToAction("SellerItemDetails", new { itemToReturn });
+                return  RedirectToAction("SellerItemDetails", new { id });
             }
 
         }
 
-        public ActionResult SellerItemDetails(ItemTagsLocation item)
+        public ActionResult SellerItemDetails(int id)
         {
-            return View(item);
+            var item = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
+            var itemToReturn = ConvertItemToItemTagsLocation(item);
+            return View(itemToReturn);
         }
 
         public ItemTagsLocation ConvertItemToItemTagsLocation(Items item)
