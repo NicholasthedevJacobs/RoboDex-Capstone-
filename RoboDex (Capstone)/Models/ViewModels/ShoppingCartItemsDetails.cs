@@ -7,9 +7,9 @@ namespace RoboDex__Capstone_.Models.ViewModels
 {
     public class ShoppingCartItemsDetails
     {
-        ShoppingCart ShoppingCart { get; set; }
-        Items Items { get; set; }
-        RoboDexer RoboDexer { get; set; }
+        public ShoppingCart ShoppingCart { get; set; }
+        public Items Items { get; set; }
+        public RoboDexer RoboDexer { get; set; }
 
     }
 }
