@@ -79,22 +79,7 @@ namespace RoboDex__Capstone_.Controllers
             var item = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
             var itemToReturn = ConvertItemToItemTagsLocation(item);
             return View(itemToReturn);
-        }
-
-        public ItemTagsLocation ConvertItemToItemTagsLocation(Items item)
-        {          
-
-            var tag = _repo.Tags.FindByCondition(t => t.TagId == item.TagId).SingleOrDefault();
-            var location = _repo.LocationPlace.FindByCondition(l => l.LocationId == item.LocationId).SingleOrDefault();
-
-            ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
-
-            itemTagsLocation.LocationPlace = location;
-            itemTagsLocation.Tags = tag;
-            itemTagsLocation.Items = item;
-
-            return (itemTagsLocation);
-        }
+        }      
 
         // GET: RoboDexerController/Create
         public ActionResult Create()
@@ -211,9 +196,9 @@ namespace RoboDex__Capstone_.Controllers
             _repo.ShoppingCart.Create(shoppingCart);
             _repo.Save();
 
-            //Possibly add a success meessage after item is added
+            //**Possibly add a success meessage after item is added**
             return RedirectToAction("Index");
-            return View(shoppingCart);
+            //return View(shoppingCart);
             
         }
 
@@ -467,6 +452,21 @@ namespace RoboDex__Capstone_.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var loggedInRoboDexer =  _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
             return loggedInRoboDexer;
+        }
+
+        private ItemTagsLocation ConvertItemToItemTagsLocation(Items item)
+        {
+
+            var tag = _repo.Tags.FindByCondition(t => t.TagId == item.TagId).SingleOrDefault();
+            var location = _repo.LocationPlace.FindByCondition(l => l.LocationId == item.LocationId).SingleOrDefault();
+
+            ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
+
+            itemTagsLocation.LocationPlace = location;
+            itemTagsLocation.Tags = tag;
+            itemTagsLocation.Items = item;
+
+            return (itemTagsLocation);
         }
     }
 }
