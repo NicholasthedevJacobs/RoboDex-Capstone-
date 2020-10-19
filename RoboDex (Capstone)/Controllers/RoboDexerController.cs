@@ -183,6 +183,8 @@ namespace RoboDex__Capstone_.Controllers
 
             var shoppingCart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == loggedInRoboDexer.ShoppingCartId).SingleOrDefault();
 
+            var 
+
             return View(shoppingCart);
         }
         public ActionResult Follow(int id)
