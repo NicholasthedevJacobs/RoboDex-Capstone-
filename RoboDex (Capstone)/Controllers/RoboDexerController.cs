@@ -165,21 +165,26 @@ namespace RoboDex__Capstone_.Controllers
         public ActionResult Follow(int id)
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
-            var selectedInventory = _repo.Inventory.FindByCondition(i => i.InventoryId == id).SingleOrDefault();
-            var roboDexerToFollow = _repo.RoboDexer.FindByCondition(r => r.InventoryId == selectedInventory.InventoryId).SingleOrDefault();
+
+            var item = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
+            var inventory = _repo.Inventory.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+            var followedDexer = _repo.Inventory.FindByCondition(i => i.RoboDexerId == inventory.RoboDexerId).FirstOrDefault();
+            //var help = _repo.Items.FindByCondition(i => i.ItemId == id).FirstOrDefault();
+            //var selectedInventory = _repo.Inventory.FindByCondition(i => i.RoboDexerId == help.ItemId).SingleOrDefault();
+            //var roboDexerToFollow = _repo.RoboDexer.FindByCondition(r => r.InventoryId == selectedInventory.InventoryId).SingleOrDefault();
 
             Followers follower = new Followers();
 
-            follower.RoboDexerId = roboDexerToFollow.RoboDexerId;
+            follower.RoboDexerId = followedDexer.RoboDexerId;
             follower.FollowerId = loggedInRoboDexer.RoboDexerId;
 
             _repo.Followers.Create(follower);
             _repo.Save();
 
-            return RedirectToAction(nameof(Followers));
+            return RedirectToAction(nameof(FollowedRoboDexers));
         }
 
-        public ActionResult Followers()
+        public ActionResult FollowedRoboDexers()
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
