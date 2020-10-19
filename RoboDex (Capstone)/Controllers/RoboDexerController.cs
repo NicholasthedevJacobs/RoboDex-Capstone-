@@ -203,12 +203,16 @@ namespace RoboDex__Capstone_.Controllers
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
             var itemToAdd = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
-            var shoppingCart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == loggedInRoboDexer.ShoppingCartId).SingleOrDefault();
+            ShoppingCart shoppingCart = new ShoppingCart();
+            
 
             shoppingCart.ItemId = itemToAdd.ItemId;
             shoppingCart.ShoppingCartId = loggedInRoboDexer.ShoppingCartId;
+            _repo.ShoppingCart.Create(shoppingCart);
             _repo.Save();
 
+            //Possibly add a success meessage after item is added
+            return RedirectToAction("Index");
             return View(shoppingCart);
             
         }
