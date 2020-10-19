@@ -1,4 +1,4 @@
-﻿@model RoboDex__Capstone_.Models.Items
+﻿@model RoboDex__Capstone_.Models.ViewModels.ItemTagsLocation
 
 @{
     ViewData["Title"] = "SellerItemDetails";
@@ -10,39 +10,22 @@
     <h4>Items</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LocationId)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Items.Name)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LocationId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Items.IMGUrl)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TagId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TagId)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Items.Price)
+        </dt>        
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Tags.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IMGUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IMGUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ItemId">Edit</a> |
+    
     <a asp-action="Index">Back to List</a>
 </div>

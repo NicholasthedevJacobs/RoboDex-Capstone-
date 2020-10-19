@@ -1,50 +1,39 @@
-﻿@model RoboDex__Capstone_.Models.Items
+﻿@model RoboDex__Capstone_.Models.ViewModels.ItemTagsLocation
 
 @{
     ViewData["Title"] = "ItemDetails";
 }
 
 <h1>ItemDetails</h1>
-<a asp-action="Details" asp-route-id="@Model.ItemId">Go To RoboDexer Profile</a> |
+<a asp-action="Details" asp-route-id="@ViewData.Model.Items.ItemId">Go To RoboDexer Profile</a> |
 <div>
     <h4>Items</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.LocationId)
+            @Html.DisplayNameFor(model => model.Items.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.LocationId)
+            @Html.DisplayFor(model => model.Items.IMGUrl)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TagId)
+            @Html.DisplayNameFor(model => model.Items.Price)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TagId)
+            @Html.DisplayFor(model => model.LocationPlace.MainLocation)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IMGUrl)
+            @Html.DisplayNameFor(model => model.LocationPlace.SecondaryLocation)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IMGUrl)
+            @Html.DisplayFor(model => model.Tags.Name)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+        
     </dl>
 </div>
 <div>
-    <a asp-action="Details" asp-route-id="@Model.LocationId">Go To RoboDexer Profile</a> |
-    <a asp-action="Edit" asp-route-id="@Model.ItemId">Edit</a> |
+    @*<a asp-action="Details" asp-route-id="">Go To RoboDexer Profile</a> |*@
+    <a asp-action="Edit" asp-route-id="@ViewData.Model.Items.ItemId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 
 </div>
