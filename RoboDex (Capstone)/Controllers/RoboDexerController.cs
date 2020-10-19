@@ -60,21 +60,39 @@ namespace RoboDex__Capstone_.Controllers
             var item = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
             var inventory = _repo.Inventory.FindByCondition(i => i.ItemId == id).SingleOrDefault();
             var itemOwner = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == inventory.RoboDexerId).FirstOrDefault();
-            if(roboDexerUser.RoboDexerId == itemOwner.RoboDexerId)
+
+            var itemToReturn = ConvertItemToItemTagsLocation(item);
+            if (roboDexerUser.RoboDexerId == itemOwner.RoboDexerId)
             {
-                return View(item);
+
+                return View(itemToReturn);
             }
             else
             {
-
+                return RedirectToAction("SellerItemDetails", new { itemToReturn });
             }
+
+        }
+
+        public ActionResult SellerItemDetails(ItemTagsLocation item)
+        {
             return View(item);
         }
 
-        //public ActionResult SellerItemDetails()
-        //{
+        public ItemTagsLocation ConvertItemToItemTagsLocation(Items item)
+        {          
 
-        //}
+            var tag = _repo.Tags.FindByCondition(t => t.TagId == item.TagId).SingleOrDefault();
+            var location = _repo.LocationPlace.FindByCondition(l => l.LocationId == item.LocationId).SingleOrDefault();
+
+            ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
+
+            itemTagsLocation.LocationPlace = location;
+            itemTagsLocation.Tags = tag;
+            itemTagsLocation.Items = item;
+
+            return (itemTagsLocation);
+        }
 
         // GET: RoboDexerController/Create
         public ActionResult Create()
