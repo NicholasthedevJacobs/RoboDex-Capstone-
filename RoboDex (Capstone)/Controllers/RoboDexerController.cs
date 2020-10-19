@@ -162,6 +162,21 @@ namespace RoboDex__Capstone_.Controllers
             return RedirectToAction(nameof(Index));         
         }
 
+        public ActionResult AddItemToCart(int id)
+        {
+            var loggedInRoboDexer = FindLoggedInRoboDexer();
+
+            var itemToAdd = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
+            var shoppingCart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == loggedInRoboDexer.ShoppingCartId).SingleOrDefault();
+
+            shoppingCart.ItemId = itemToAdd.ItemId;
+            shoppingCart.ShoppingCartId = loggedInRoboDexer.ShoppingCartId;
+            _repo.Save();
+
+            return View(shoppingCart);
+            
+        }
+
         public ActionResult Follow(int id)
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
