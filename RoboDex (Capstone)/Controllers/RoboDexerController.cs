@@ -193,7 +193,7 @@ namespace RoboDex__Capstone_.Controllers
             }
             return View(followedRoboDexers);
         }
-        public async Task<IActionResult> Inventory(int? id)
+        public ActionResult Inventory(int? id)
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
             List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
@@ -209,12 +209,13 @@ namespace RoboDex__Capstone_.Controllers
                 return View(myItemsList);
             }
             else
-            {
+            {   
                 return RedirectToAction("SellerInventory", new { id });               
             }
+            
         }
 
-        public async Task<IActionResult> SellerInventory(int? id)
+        public ActionResult SellerInventory(int? id)
         {          
             List<ItemsTagsInfo> myItemsList = new List<ItemsTagsInfo>();
             if (id == null)
@@ -250,7 +251,7 @@ namespace RoboDex__Capstone_.Controllers
                 itemTagsInfo.TagName = tag.Name;
                 itemTagsInfo.TagId = tag.TagId;
                 var doodly = allItems.Where(a => a.TagId == tag.TagId).SingleOrDefault();
-                itemTagsInfo.Items = doodly;
+                itemTagsInfo.Item = doodly;
                 listOfAllItems.Add(itemTagsInfo);                              
             }
             return View(listOfAllItems);
@@ -357,7 +358,7 @@ namespace RoboDex__Capstone_.Controllers
 
                     var tags = _repo.Tags.FindByCondition(i => i.TagId == roboDexerItems.TagId).SingleOrDefault();
                     
-                    itemTagsLocation.Items = roboDexerItems;
+                    itemTagsLocation.Item = roboDexerItems;
                     itemTagsLocation.TagName = tags.Name;
 
                     myItemsList.Add(itemTagsLocation);

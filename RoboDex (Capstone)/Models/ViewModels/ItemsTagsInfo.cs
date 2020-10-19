@@ -7,7 +7,7 @@ namespace RoboDex__Capstone_.Models.ViewModels
 {
     public class ItemsTagsInfo
     {
-        public Items Items { get; set; }
+        public Items Item { get; set; }
         public string TagName { get; set; }
         public int TagId { get; set; }
     }
