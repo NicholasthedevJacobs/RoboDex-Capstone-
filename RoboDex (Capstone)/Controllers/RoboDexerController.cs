@@ -177,6 +177,14 @@ namespace RoboDex__Capstone_.Controllers
             
         }
 
+        public ActionResult ShoppingCart()
+        {
+            var loggedInRoboDexer = FindLoggedInRoboDexer();
+
+            var shoppingCart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == loggedInRoboDexer.ShoppingCartId).SingleOrDefault();
+
+            return View(shoppingCart);
+        }
         public ActionResult Follow(int id)
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
