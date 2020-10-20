@@ -15,30 +15,44 @@
                 <th>
                     @Html.DisplayNameFor(model => model[0].Message)
                 </th>
-                
+
         </thead>
 
         <tbody>
-            @foreach (var item in Model)
+            @*@foreach (var item in Model)*@
+            @for (int i = 0; i < Model.Count; i++)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Message)
-                    </td>
-                    
-                    <td>
-                        @*<a asp-action="EditItem" asp-route-id="@item.Items.ItemId">Edit</a> |
-                        <a asp-action="DeleteItem" asp-route-id="@item.Items.ItemId">Delete</a> |*@
-                        <a asp-action="ItemDetails" asp-route-id="@item.ItemId">Details</a> 
-                    </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem[i].Message)
+                </td>
+                <td>
+                    <a asp-action="ItemDetails" asp-route-id="@Model[i].ItemId">Details</a>
+                    <a asp-action="MessageRead" asp-route-id="@Model[i].Id">Mark</a>
+                </td>
 
-
-                </tr>
+                            @*<td>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                    name="MessageRead"
+                                    value="@Model[i].isRead"
+                                    @if (Model[i].isRead == false) { <text> checked </text> } /> @Model[i].isRead
+                            </label>
+                        </div>
+                    </td>*@
+                
+            </tr>
+                
             }
         </tbody>
     </table>
+    
 </div>
 <div>
+    <div class="form-group text-center">
+        <input type="submit" class="btn btn-primary" value="Submit" />
+    </div>
     @*<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |*@
     <a asp-action="Index">Back to List</a>
 </div>

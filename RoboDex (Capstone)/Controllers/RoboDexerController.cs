@@ -183,6 +183,15 @@ namespace RoboDex__Capstone_.Controllers
             return RedirectToAction(nameof(Index));         
         }
 
+        public async Task<IActionResult> MessageRead(int Id)
+        {
+            var message = await _repo.Inbox.FindByCondition(i => i.Id == Id).SingleOrDefaultAsync();
+            message.isRead = true;
+            _repo.Inbox.Update(message);
+            _repo.Save();
+            return View();
+        }
+
         public ActionResult SubmitMessage(int cartId)
         {
             var cart = _repo.ShoppingCart.FindByCondition(s => s.Id == cartId).SingleOrDefault();
