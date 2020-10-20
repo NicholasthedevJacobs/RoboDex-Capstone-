@@ -183,7 +183,7 @@ namespace RoboDex__Capstone_.Controllers
             return RedirectToAction(nameof(Index));         
         }
 
-        public ActionResult AddMessage(int id)
+        public ActionResult SubmitMessage(int id)
         {
             var cart = _repo.ShoppingCart.FindByCondition(s => s.Id == id).SingleOrDefault();
             var item = _repo.Items.FindByCondition(i => i.ItemId == cart.ItemId).SingleOrDefault();
@@ -197,14 +197,15 @@ namespace RoboDex__Capstone_.Controllers
             return View(inbox);
         }
 
-        //[HttpPost]
-        //public IActionResult SubmitMessage(Inbox messageToAdd)
-        //{
-        //    _repo.Inbox.Create(messageToAdd);
-        //    _repo.Save();
+        [HttpPost]
+        public IActionResult SubmitMessage(Inbox messageToAdd)
+        {
+            _repo.Inbox.Create(messageToAdd);
+            _repo.Save();
 
-        //    //return RedirectToAction("AddedToCart", new { cartId });
-        //}
+            return View();
+            //return RedirectToAction("AddedToCart", new { cartId });
+        }
 
         public ActionResult AddItemToCart(int id)
         {
@@ -222,10 +223,12 @@ namespace RoboDex__Capstone_.Controllers
             //**Possibly add a success meessage after item is added**
             var cartItem = _repo.ShoppingCart.FindByCondition(s => s.Id == shoppingCart.Id).SingleOrDefault();
             var cartId = cartItem.Id;
-            AddMessage(cartId);
-            return RedirectToAction("AddedToCart",  new { cartId} );
+
+            return RedirectToAction("SubmitMessage", new { id = cartId });
+            //SubmitMessage(cartId);
+            //return RedirectToAction("AddedToCart",  new { cartId} );
             //return View(shoppingCart);
-            
+
         }
 
         public ActionResult AddedToCart(int cartId)
