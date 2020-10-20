@@ -10,10 +10,11 @@ namespace RoboDex__Capstone_.Models
     public class Inbox
     {
         [Key]
-        public int Id { get; set; }       
+        public int Id { get; set; }   
         public int InboxId { get; set; }
         public string Message { get; set; }
         public bool isRead { get; set; }
+        public int ItemId { get; set; }
 
     }
 }
