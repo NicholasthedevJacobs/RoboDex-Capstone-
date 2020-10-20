@@ -1,10 +1,10 @@
 ﻿@model List<RoboDex__Capstone_.Models.Inbox>
 
 @{
-    ViewData["Title"] = "UpdateInbox";
+    ViewData["Title"] = "ReadInbox";
 }
 
-<h1>UpdateInbox</h1>
+<h1>ReadInbox</h1>
 
 <div>
     <h4>Inbox</h4>
@@ -28,8 +28,7 @@
                     </td>
 
                     <td>
-                        <a asp-action="ItemDetails" asp-route-id="@item.ItemId">Details</a>
-                        <a asp-action="MessageRead" asp-route-id="@item.Id">Mark</a>
+                        <a asp-action="ItemDetails" asp-route-id="@item.ItemId">Details</a>                     
                     </td>
 
 
@@ -37,10 +36,8 @@
             }
         </tbody>
     </table>
-    
 </div>
 <div>
 
-    <a asp-action="ReadInbox">Go To Read Messages</a>
     <a asp-action="Index">Back to List</a>
 </div>
