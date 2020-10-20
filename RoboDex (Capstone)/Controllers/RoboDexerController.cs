@@ -193,18 +193,24 @@ namespace RoboDex__Capstone_.Controllers
             Inbox inbox = new Inbox();
             inbox.InboxId = itemOwner.InboxId;
 
-
+            ViewBag.InboxId = inbox.InboxId;
+            ViewBag.CartId = cartId;
+            var thing = ViewBag;
             return View(inbox);
         }
 
         [HttpPost]
         public IActionResult SubmitMessage(Inbox messageToAdd)
         {
+            var dexer = _repo.RoboDexer.FindByCondition(r => r.InboxId == messageToAdd.InboxId).SingleOrDefault();
+            var inventory = _repo.Inventory.FindByCondition(i => i.RoboDexerId == dexer.RoboDexerId).FirstOrDefault();
+            var item = _repo.Items.FindByCondition(i => i.ItemId == inventory.ItemId).FirstOrDefault();
+            //var cartId = _repo.ShoppingCart.FindByCondition(s => s.Id == dexer.ShoppingCartId).FirstOrDefault();
             _repo.Inbox.Create(messageToAdd);
             _repo.Save();
 
-            return View();
-            //return RedirectToAction("AddedToCart", new { cartId });
+            //return View();
+            return RedirectToAction("AddedToCart", new { cartId });
         }
 
         public ActionResult AddItemToCart(int id)
