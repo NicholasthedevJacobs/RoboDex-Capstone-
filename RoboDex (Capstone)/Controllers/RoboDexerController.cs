@@ -189,7 +189,7 @@ namespace RoboDex__Capstone_.Controllers
             message.isRead = true;
             _repo.Inbox.Update(message);
             _repo.Save();
-            return View();
+            return View(message);
         }
 
         public ActionResult SubmitMessage(int cartId)
@@ -214,6 +214,27 @@ namespace RoboDex__Capstone_.Controllers
 
             var inbox =  await _repo.Inbox.FindByCondition(i => i.InboxId == loggedInRoboDexer.InboxId).ToListAsync();
             return View(inbox);
+        }
+
+        public async Task<IActionResult> ReadInbox(int id)
+        {
+            var loggedInRoboDexer = FindLoggedInRoboDexer();
+            
+            var inbox = await _repo.Inbox.FindByCondition(i => i.InboxId == loggedInRoboDexer.InboxId).ToListAsync();
+
+            List<Inbox> readMessages = new List<Inbox>();
+            foreach(Inbox message in inbox)
+            {
+                if(message.isRead == true)
+                {
+                    readMessages.Add(message);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return View(readMessages);
         }
 
         [HttpPost]
