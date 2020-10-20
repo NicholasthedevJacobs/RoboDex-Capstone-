@@ -194,6 +194,7 @@ namespace RoboDex__Capstone_.Controllers
            
             inboxCart.InboxId = itemOwner.InboxId;
             inboxCart.cartId = cartId;
+            inboxCart.ItemId = item.ItemId;
             
             return View(inboxCart);
         }
@@ -213,6 +214,7 @@ namespace RoboDex__Capstone_.Controllers
             Inbox inbox = new Inbox();
             inbox = inboxCart.Inbox;
             inbox.InboxId = inboxCart.InboxId;
+            inbox.ItemId = inboxCart.ItemId;
             _repo.Inbox.Create(inbox);
             _repo.Save();
 

@@ -14,6 +14,7 @@ namespace RoboDex__Capstone_.Models
         public int InboxId { get; set; }
         public string Message { get; set; }
         public bool isRead { get; set; }
+        [ForeignKey("Items")]
         public int ItemId { get; set; }
 
     }
