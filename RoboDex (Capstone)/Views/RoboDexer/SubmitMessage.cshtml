@@ -16,13 +16,14 @@
             <input type="hidden" asp-for="cartId" />
             <input type="hidden" asp-for="Inbox.InboxId" />
             <input type="hidden" asp-for="Inbox.isRead" />
-           
+            <input type="hidden" asp-for="InboxId" />
+
             <div class="form-group">
                 <label asp-for="Inbox.Message" class="control-label"></label>
                 <input asp-for="Inbox.Message" class="form-control" />
                 <span asp-validation-for="Inbox.Message" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
