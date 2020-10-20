@@ -198,6 +198,14 @@ namespace RoboDex__Capstone_.Controllers
             return View(inboxCart);
         }
 
+        public async Task<IActionResult> UpdateInbox()
+        {
+            var loggedInRoboDexer = FindLoggedInRoboDexer();
+
+            var inbox =  await _repo.Inbox.FindByCondition(i => i.InboxId == loggedInRoboDexer.InboxId).ToListAsync();
+            return View(inbox);
+        }
+
         [HttpPost]
         public IActionResult SubmitMessage(InboxCart inboxCart)
         {

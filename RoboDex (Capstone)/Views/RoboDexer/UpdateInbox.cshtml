@@ -1,0 +1,44 @@
+﻿@model List<RoboDex__Capstone_.Models.Inbox>
+
+@{
+    ViewData["Title"] = "UpdateInbox";
+}
+
+<h1>UpdateInbox</h1>
+
+<div>
+    <h4>Inbox</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Message)
+                </th>
+                
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    
+                    <td>
+                        @*<a asp-action="EditItem" asp-route-id="@item.Items.ItemId">Edit</a> |
+                        <a asp-action="DeleteItem" asp-route-id="@item.Items.ItemId">Delete</a> |
+                        <a asp-action="ItemDetails" asp-route-id="@item.Items.ItemId">Details</a> |*@
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |*@
+    <a asp-action="Index">Back to List</a>
+</div>
