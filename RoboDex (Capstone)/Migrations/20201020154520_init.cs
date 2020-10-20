@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RoboDex__Capstone_.Migrations
 {
-    public partial class @new : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -64,13 +64,15 @@ namespace RoboDex__Capstone_.Migrations
                 name: "Inbox",
                 columns: table => new
                 {
-                    InboxId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Message = table.Column<string>(nullable: true)
+                    InboxId = table.Column<int>(nullable: false),
+                    Message = table.Column<string>(nullable: true),
+                    isRead = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Inbox", x => x.InboxId);
+                    table.PrimaryKey("PK_Inbox", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -281,7 +283,7 @@ namespace RoboDex__Capstone_.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "6f45ba3d-417c-4ca0-89ba-8ad8706f664f", "1afd6444-bc43-4595-b66d-9180c03ecbda", "RoboDexer", "ROBODEXER" });
+                values: new object[] { "e9e46d5f-c8ec-4aef-8c8f-1ee75ec96a97", "52e6e297-944d-47c8-9b22-88c22f438bea", "RoboDexer", "ROBODEXER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

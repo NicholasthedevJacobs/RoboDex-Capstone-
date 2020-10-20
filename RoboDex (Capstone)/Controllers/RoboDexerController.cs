@@ -183,6 +183,20 @@ namespace RoboDex__Capstone_.Controllers
             return RedirectToAction(nameof(Index));         
         }
 
+        public ActionResult AddMessage(int id)
+        {
+            var cart = _repo.ShoppingCart.FindByCondition(s => s.Id == id).SingleOrDefault();
+            var item = _repo.Items.FindByCondition(i => i.ItemId == cart.ItemId).SingleOrDefault();
+            var inventory = _repo.Inventory.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+            var itemOwner = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == inventory.RoboDexerId).SingleOrDefault();
+
+            Inbox inbox = new Inbox();
+            inbox.InboxId = itemOwner.InboxId;
+
+
+            return View(inbox);
+        }
+
         public ActionResult AddItemToCart(int id)
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
@@ -199,6 +213,7 @@ namespace RoboDex__Capstone_.Controllers
             //**Possibly add a success meessage after item is added**
             var cartItem = _repo.ShoppingCart.FindByCondition(s => s.Id == shoppingCart.Id).SingleOrDefault();
             var cartId = cartItem.Id;
+            AddMessage(cartId);
             return RedirectToAction("AddedToCart",  new { cartId} );
             //return View(shoppingCart);
             

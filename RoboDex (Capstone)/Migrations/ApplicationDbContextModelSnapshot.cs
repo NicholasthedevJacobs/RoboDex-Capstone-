@@ -48,8 +48,8 @@ namespace RoboDex__Capstone_.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6f45ba3d-417c-4ca0-89ba-8ad8706f664f",
-                            ConcurrencyStamp = "1afd6444-bc43-4595-b66d-9180c03ecbda",
+                            Id = "e9e46d5f-c8ec-4aef-8c8f-1ee75ec96a97",
+                            ConcurrencyStamp = "52e6e297-944d-47c8-9b22-88c22f438bea",
                             Name = "RoboDexer",
                             NormalizedName = "ROBODEXER"
                         });
@@ -244,15 +244,21 @@ namespace RoboDex__Capstone_.Migrations
 
             modelBuilder.Entity("RoboDex__Capstone_.Models.Inbox", b =>
                 {
-                    b.Property<int>("InboxId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("InboxId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("InboxId");
+                    b.Property<bool>("isRead")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Inbox");
                 });
