@@ -214,7 +214,7 @@ namespace RoboDex__Capstone_.Controllers
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
-            var shoppingCart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == loggedInRoboDexer.ShoppingCartId).SingleOrDefault();
+            var shoppingCart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == loggedInRoboDexer.ShoppingCartId).FirstOrDefault();
 
             var items = _repo.ShoppingCart.FindByCondition(s => s.ItemId == shoppingCart.ItemId).ToList();
             var roboSeller = _repo.RoboDexer.FindByCondition(r => r.ShoppingCartId == shoppingCart.ShoppingCartId).SingleOrDefault();
@@ -222,8 +222,8 @@ namespace RoboDex__Capstone_.Controllers
             foreach(ShoppingCart item in items)
             {
                 ShoppingCartItemsDetails placeHolder = new ShoppingCartItemsDetails();
-                placeHolder.Items.ItemId = item.ItemId;
-                placeHolder.ShoppingCart.ShoppingCartId = shoppingCart.ShoppingCartId;
+                //placeHolder.Items = item;
+                placeHolder.ShoppingCart = shoppingCart;
                 placeHolder.RoboDexer = roboSeller;
                 shoppingCartItemsDetails.Add(placeHolder);
             }
