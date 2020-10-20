@@ -207,9 +207,10 @@ namespace RoboDex__Capstone_.Controllers
         public ActionResult AddedToCart(int cartId)
         {
             var cartItem = _repo.ShoppingCart.FindByCondition(s => s.Id == cartId).FirstOrDefault();
-            var item = _repo.Items.FindByCondition(i => i.ItemId == cartItem.ItemId).FirstOrDefault();
-            return View(item);
+            var shoppingCart = _repo.Items.FindByCondition(i => i.ItemId == cartItem.ItemId).FirstOrDefault();
+            return View(shoppingCart);
         }
+
         public ActionResult ShoppingCart()
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
@@ -219,17 +220,18 @@ namespace RoboDex__Capstone_.Controllers
             var items = _repo.ShoppingCart.FindByCondition(s => s.ItemId == shoppingCart.ItemId).ToList();
             var roboSeller = _repo.RoboDexer.FindByCondition(r => r.ShoppingCartId == shoppingCart.ShoppingCartId).SingleOrDefault();
             List<ShoppingCartItemsDetails> shoppingCartItemsDetails = new List<ShoppingCartItemsDetails>();
-            foreach(ShoppingCart item in items)
+            foreach (ShoppingCart item in items)
             {
                 ShoppingCartItemsDetails placeHolder = new ShoppingCartItemsDetails();
-                //placeHolder.Items = item;
+                var itemToAdd = _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+                placeHolder.Items = itemToAdd;
                 placeHolder.ShoppingCart = shoppingCart;
                 placeHolder.RoboDexer = roboSeller;
                 shoppingCartItemsDetails.Add(placeHolder);
-            }
-            
 
-            return View(shoppingCart);
+            }
+           
+            return View(shoppingCartItemsDetails);
         }
         public ActionResult Follow(int id)
         {
