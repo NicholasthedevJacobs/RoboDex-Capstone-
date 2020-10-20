@@ -189,27 +189,28 @@ namespace RoboDex__Capstone_.Controllers
             var item = _repo.Items.FindByCondition(i => i.ItemId == cart.ItemId).SingleOrDefault();
             var inventory = _repo.Inventory.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
             var itemOwner = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == inventory.RoboDexerId).SingleOrDefault();
-
-            Inbox inbox = new Inbox();
-            inbox.InboxId = itemOwner.InboxId;
-
-            ViewBag.InboxId = inbox.InboxId;
-            ViewBag.CartId = cartId;
-            var thing = ViewBag;
-            return View(inbox);
+           
+            InboxCart inboxCart = new InboxCart();
+            var inbox = _repo.Inbox.FindByCondition(i => i.InboxId == itemOwner.InboxId).SingleOrDefault();
+            inboxCart.Inbox = inbox;
+            inboxCart.cartId = cartId;
+            
+            return View(inboxCart);
         }
 
         [HttpPost]
-        public IActionResult SubmitMessage(Inbox messageToAdd)
+        public IActionResult SubmitMessage(InboxCart inboxCart)
         {
-            var dexer = _repo.RoboDexer.FindByCondition(r => r.InboxId == messageToAdd.InboxId).SingleOrDefault();
+            var dexer = _repo.RoboDexer.FindByCondition(r => r.InboxId == inboxCart.Inbox.InboxId).SingleOrDefault();
             var inventory = _repo.Inventory.FindByCondition(i => i.RoboDexerId == dexer.RoboDexerId).FirstOrDefault();
             var item = _repo.Items.FindByCondition(i => i.ItemId == inventory.ItemId).FirstOrDefault();
             //var cartId = _repo.ShoppingCart.FindByCondition(s => s.Id == dexer.ShoppingCartId).FirstOrDefault();
-            _repo.Inbox.Create(messageToAdd);
+            Inbox inbox = new Inbox();
+            inbox = inboxCart.Inbox;
+            _repo.Inbox.Create(inbox);
             _repo.Save();
 
-            //return View();
+            var cartId = inboxCart.cartId;
             return RedirectToAction("AddedToCart", new { cartId });
         }
 
