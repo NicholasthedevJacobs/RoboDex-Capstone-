@@ -197,11 +197,19 @@ namespace RoboDex__Capstone_.Controllers
             _repo.Save();
 
             //**Possibly add a success meessage after item is added**
-            return RedirectToAction("Index");
+            var cartItem = _repo.ShoppingCart.FindByCondition(s => s.Id == shoppingCart.Id).SingleOrDefault();
+            var cartId = cartItem.Id;
+            return RedirectToAction("AddedToCart",  new { cartId} );
             //return View(shoppingCart);
             
         }
 
+        public ActionResult AddedToCart(int cartId)
+        {
+            var cartItem = _repo.ShoppingCart.FindByCondition(s => s.Id == cartId).FirstOrDefault();
+            var item = _repo.Items.FindByCondition(i => i.ItemId == cartItem.ItemId).FirstOrDefault();
+            return View(item);
+        }
         public ActionResult ShoppingCart()
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
