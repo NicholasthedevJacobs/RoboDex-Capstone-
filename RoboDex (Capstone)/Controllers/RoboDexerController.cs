@@ -213,7 +213,20 @@ namespace RoboDex__Capstone_.Controllers
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
             var inbox =  await _repo.Inbox.FindByCondition(i => i.InboxId == loggedInRoboDexer.InboxId).ToListAsync();
-            return View(inbox);
+
+            List<Inbox> unreadMessages = new List<Inbox>();
+            foreach (Inbox message in inbox)
+            {
+                if (message.isRead == false)
+                {
+                    unreadMessages.Add(message);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return View(unreadMessages);
         }
 
         public async Task<IActionResult> ReadInbox(int id)
