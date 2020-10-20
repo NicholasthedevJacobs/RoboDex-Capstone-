@@ -197,6 +197,15 @@ namespace RoboDex__Capstone_.Controllers
             return View(inbox);
         }
 
+        [HttpPost]
+        public IActionResult SubmitMessage(Inbox messageToAdd)
+        {
+            _repo.Inbox.Create(messageToAdd);
+            _repo.Save();
+
+            //return RedirectToAction("AddedToCart", new { cartId });
+        }
+
         public ActionResult AddItemToCart(int id)
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
