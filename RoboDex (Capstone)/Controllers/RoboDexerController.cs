@@ -611,54 +611,5 @@ namespace RoboDex__Capstone_.Controllers
         }
     }
 
-    //public class ViewBagActionFilter : ActionFilterAttribute
-    //{
-    //    private IRepositoryWrapper _repo;
-
-
-    //    public ViewBagActionFilter(IRepositoryWrapper repo)
-    //    {
-    //        _repo = repo;
-
-    //    }
-    //    public override void OnResultExecuting(ResultExecutingContext context)
-    //    {
-           
-    //        if (context.Controller is Controller)
-    //        {
-    //            var controller = context.Controller as Controller;
-    //            var loggedInRoboDexer = FindLoggedInRoboDexer();
-
-    //            var inbox = _repo.Inbox.FindByCondition(i => i.InboxId == loggedInRoboDexer.InboxId).ToList();
-
-    //            List<Inbox> readMessages = new List<Inbox>();
-    //            foreach (Inbox message in inbox)
-    //            {
-    //                if (message.isRead == true)
-    //                {
-    //                    readMessages.Add(message);
-    //                }
-    //                else
-    //                {
-    //                    continue;
-    //                }
-    //            }
-    //            var messages = readMessages.Count;
-    //            controller.ViewBag.UserCount = messages.ToString();
-
-                
-
-    //            //also you have access to the httpcontext & route in controller.HttpContext & controller.RouteData
-    //        }
-
-    //        base.OnResultExecuting(context);
-    //    }
-
-    //    private RoboDexer FindLoggedInRoboDexer()
-    //    {
-    //        var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-    //        var loggedInRoboDexer = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
-    //        return loggedInRoboDexer;
-    //    }
-    //}
+    
 }

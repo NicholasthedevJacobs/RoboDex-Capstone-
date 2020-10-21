@@ -37,10 +37,7 @@ namespace RoboDex__Capstone_
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-
-            //services.AddControllersWithViews(options => { options.Filters.Add(new Components.ViewBagActionFilter()); });
-
-
+          
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
