@@ -36,10 +36,10 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="RoboDexer" asp-action="UpdateInbox">
-                                Messages
-                             
-                             
-                                <h2>@ViewBag.UserCount  </h2>
+                                Messages @ViewBag.UserCount
+
+
+                                @*<h2>@ViewBag.UserCount  </h2>*@
                                 @*@Model.Where(m => m.isRead == false).ToList().Count();*@
                             </a>
 

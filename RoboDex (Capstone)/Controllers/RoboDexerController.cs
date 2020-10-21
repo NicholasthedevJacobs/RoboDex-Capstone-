@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Razor.Language.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -42,7 +43,8 @@ namespace RoboDex__Capstone_.Controllers
         // GET: RoboDexerController/Details/5
         public ActionResult Details(int id)
         {
-            if(id == 0)
+            NavLayout();
+            if (id == 0)
             {
                 var roboDexerUser = FindLoggedInRoboDexer();
                 return View(roboDexerUser);
@@ -57,6 +59,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public ActionResult ItemDetails (int id)
         {
+            NavLayout();
             var roboDexerUser = FindLoggedInRoboDexer();
             var item = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
             var inventory = _repo.Inventory.FindByCondition(i => i.ItemId == id).SingleOrDefault();
@@ -77,6 +80,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public ActionResult SellerItemDetails(int id)
         {
+            NavLayout();
             var item = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
             var itemToReturn = ConvertItemToItemTagsLocation(item);
             return View(itemToReturn);
@@ -85,6 +89,7 @@ namespace RoboDex__Capstone_.Controllers
         // GET: RoboDexerController/Create
         public ActionResult Create()
         {
+            NavLayout();
             RoboDexer roboDexer = new RoboDexer();
             return View(roboDexer);
         }
@@ -94,6 +99,7 @@ namespace RoboDex__Capstone_.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(RoboDexer robodexer)
         {
+            NavLayout();
             if (ModelState.IsValid)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -120,6 +126,7 @@ namespace RoboDex__Capstone_.Controllers
         // GET: RoboDexerController/Edit/5
         public ActionResult EditItem(int id)
         {
+            NavLayout();
             ItemTagsLocation itemToEnterIntoView = new ItemTagsLocation();
 
             var itemToEdit = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
@@ -139,6 +146,7 @@ namespace RoboDex__Capstone_.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditTheItem(int id, ItemTagsLocation itemTagsLocation)
         {
+            NavLayout();
             var itemToEdit = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
             itemToEdit = itemTagsLocation.Items;
 
@@ -162,6 +170,7 @@ namespace RoboDex__Capstone_.Controllers
         // GET: RoboDexerController/Delete/5
         public async Task<ActionResult> DeleteItem(int id)
         {
+            NavLayout();
             var itemTODelete = await _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefaultAsync();
             
             if(itemTODelete == null)
@@ -177,6 +186,7 @@ namespace RoboDex__Capstone_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id)
         {
+            NavLayout();
             var itemToDelete = await _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefaultAsync();
             _repo.Items.Delete(itemToDelete);
             _repo.Save();
@@ -186,6 +196,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public async Task<IActionResult> MessageRead(int Id)
         {
+            NavLayout();
             var message = await _repo.Inbox.FindByCondition(i => i.Id == Id).SingleOrDefaultAsync();
             message.isRead = true;
             _repo.Inbox.Update(message);
@@ -195,6 +206,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public ActionResult SubmitMessage(int cartId)
         {
+            NavLayout();
             var cart = _repo.ShoppingCart.FindByCondition(s => s.Id == cartId).SingleOrDefault();
             var item = _repo.Items.FindByCondition(i => i.ItemId == cart.ItemId).SingleOrDefault();
             var inventory = _repo.Inventory.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
@@ -211,6 +223,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public async Task<IActionResult> UpdateInbox()
         {
+            NavLayout();
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
             var inbox =  await _repo.Inbox.FindByCondition(i => i.InboxId == loggedInRoboDexer.InboxId).ToListAsync();
@@ -257,6 +270,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public async Task<IActionResult> ReadInbox(int id)
         {
+            NavLayout();
             var loggedInRoboDexer = FindLoggedInRoboDexer();
             
             var inbox = await _repo.Inbox.FindByCondition(i => i.InboxId == loggedInRoboDexer.InboxId).ToListAsync();
@@ -279,7 +293,7 @@ namespace RoboDex__Capstone_.Controllers
         [HttpPost]
         public IActionResult SubmitMessage(InboxCart inboxCart)
         {
-            
+            NavLayout();
             Inbox inbox = new Inbox();
             inbox = inboxCart.Inbox;
             inbox.InboxId = inboxCart.InboxId;
@@ -293,6 +307,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public ActionResult AddItemToCart(int id)
         {
+            NavLayout();
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
             var itemToAdd = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
@@ -312,6 +327,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public ActionResult AddedToCart(int cartId)
         {
+            NavLayout();
             var cartItem = _repo.ShoppingCart.FindByCondition(s => s.Id == cartId).FirstOrDefault();
             var shoppingCart = _repo.Items.FindByCondition(i => i.ItemId == cartItem.ItemId).FirstOrDefault();
             return View(shoppingCart);
@@ -319,6 +335,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public ActionResult ShoppingCart()
         {
+            NavLayout();
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
             var shoppingCart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == loggedInRoboDexer.ShoppingCartId).FirstOrDefault();
@@ -341,6 +358,7 @@ namespace RoboDex__Capstone_.Controllers
         }
         public ActionResult Follow(int id)
         {
+            NavLayout();
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
             var item = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
@@ -360,6 +378,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public ActionResult FollowedRoboDexers()
         {
+            NavLayout();
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
             var listOfFollowers = _repo.Followers.FindByCondition(f => f.FollowerId == loggedInRoboDexer.RoboDexerId).ToList();
@@ -375,6 +394,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public ActionResult Followers()
         {
+            NavLayout();
             var loggedInRoboDexer = FindLoggedInRoboDexer();
             List<RoboDexer> roboDexersThatFollow = new List<RoboDexer>();
             var dexersFollow = _repo.Followers.FindByCondition(f => f.RoboDexerId == loggedInRoboDexer.RoboDexerId).ToList();
@@ -388,6 +408,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public ActionResult Inventory(int? id)
         {
+            NavLayout();
             var loggedInRoboDexer = FindLoggedInRoboDexer();
             List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
             List<ItemsTagsInfo> itemsTagsInfo = new List<ItemsTagsInfo>();
@@ -409,7 +430,8 @@ namespace RoboDex__Capstone_.Controllers
         }
 
         public ActionResult SellerInventory(int? id)
-        {          
+        {
+            NavLayout();
             List<ItemsTagsInfo> myItemsList = new List<ItemsTagsInfo>();
             if (id == null)
             {
@@ -422,6 +444,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public IActionResult Search(string searchTerm)
         {
+            NavLayout();
             var allTags =  _repo.Tags.FindAll();
             var allItems = _repo.Items.FindAll();
                        
@@ -452,6 +475,7 @@ namespace RoboDex__Capstone_.Controllers
        
         public IActionResult AddItem()
         {
+            NavLayout();
             ItemTagsLocation itemsTagsLocation = new ItemTagsLocation();
             return View(itemsTagsLocation);     
         }
@@ -460,6 +484,7 @@ namespace RoboDex__Capstone_.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddItem(ItemTagsLocation itemTagsLocation)
         {
+            NavLayout();
             //finds the logged in user
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
@@ -496,6 +521,7 @@ namespace RoboDex__Capstone_.Controllers
 
         private List<ItemTagsLocation> FindMyInventory(RoboDexer loggedInRoboDexer)
         {
+            
             var allItems =  _repo.Inventory.FindAll().ToList();
             List<ItemTagsLocation> myItemsList = new List<ItemTagsLocation>();
             foreach (Inventory item in allItems)
@@ -530,6 +556,7 @@ namespace RoboDex__Capstone_.Controllers
 
         private List<ItemsTagsInfo> FindAnotherUserInventory(int? id)
         {
+            
             var inventoryToView = _repo.Inventory.FindByCondition(i => i.InventoryId == id).SingleOrDefault();
 
             var allItems = _repo.Inventory.FindAll().ToList();
@@ -582,4 +609,55 @@ namespace RoboDex__Capstone_.Controllers
             return (itemTagsLocation);
         }
     }
+
+    //public class ViewBagActionFilter : ActionFilterAttribute
+    //{
+    //    private IRepositoryWrapper _repo;
+
+
+    //    public ViewBagActionFilter(IRepositoryWrapper repo)
+    //    {
+    //        _repo = repo;
+
+    //    }
+    //    public override void OnResultExecuting(ResultExecutingContext context)
+    //    {
+           
+    //        if (context.Controller is Controller)
+    //        {
+    //            var controller = context.Controller as Controller;
+    //            var loggedInRoboDexer = FindLoggedInRoboDexer();
+
+    //            var inbox = _repo.Inbox.FindByCondition(i => i.InboxId == loggedInRoboDexer.InboxId).ToList();
+
+    //            List<Inbox> readMessages = new List<Inbox>();
+    //            foreach (Inbox message in inbox)
+    //            {
+    //                if (message.isRead == true)
+    //                {
+    //                    readMessages.Add(message);
+    //                }
+    //                else
+    //                {
+    //                    continue;
+    //                }
+    //            }
+    //            var messages = readMessages.Count;
+    //            controller.ViewBag.UserCount = messages.ToString();
+
+                
+
+    //            //also you have access to the httpcontext & route in controller.HttpContext & controller.RouteData
+    //        }
+
+    //        base.OnResultExecuting(context);
+    //    }
+
+    //    private RoboDexer FindLoggedInRoboDexer()
+    //    {
+    //        var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+    //        var loggedInRoboDexer = _repo.RoboDexer.FindByCondition(r => r.IdentityUserId == userId).SingleOrDefault();
+    //        return loggedInRoboDexer;
+    //    }
+    //}
 }
