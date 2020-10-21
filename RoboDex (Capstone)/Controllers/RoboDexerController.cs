@@ -27,6 +27,7 @@ namespace RoboDex__Capstone_.Controllers
         // GET: RoboDexerController
         public ActionResult Index()
         {
+            NavLayout();
 
             var roboDexerUser = FindLoggedInRoboDexer();
             if (roboDexerUser == null)
@@ -229,11 +230,11 @@ namespace RoboDex__Capstone_.Controllers
             return View(unreadMessages);
         }
        
-        public async Task<IActionResult> NavLayout()
+        public void NavLayout()
         {
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
-            var inbox = await _repo.Inbox.FindByCondition(i => i.InboxId == loggedInRoboDexer.InboxId).ToListAsync();
+            var inbox =  _repo.Inbox.FindByCondition(i => i.InboxId == loggedInRoboDexer.InboxId).ToList();
 
             List<Inbox> readMessages = new List<Inbox>();
             foreach (Inbox message in inbox)
@@ -250,7 +251,7 @@ namespace RoboDex__Capstone_.Controllers
             var messages = readMessages.Count;
             ViewBag.UserCount = messages.ToString();
 
-            return View(messages);
+            //return View(messages);
             //return readMessages.Count;
         }
 

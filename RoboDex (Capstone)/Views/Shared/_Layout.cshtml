@@ -39,7 +39,7 @@
                                 Messages
                              
                              
-                                <h2>@*@ViewData.UserCount*@  </h2>
+                                <h2>@ViewBag.UserCount  </h2>
                                 @*@Model.Where(m => m.isRead == false).ToList().Count();*@
                             </a>
 
@@ -67,7 +67,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script type="text/javascript">
-        @*var count ='@Model.Count()';*@
+        //var count = Model.Count;
 
     </script>
     @RenderSection("Scripts", required: false)
