@@ -28,13 +28,14 @@ namespace RoboDex__Capstone_.Controllers
         // GET: RoboDexerController
         public ActionResult Index()
         {
-            NavLayout();
+           
 
             var roboDexerUser = FindLoggedInRoboDexer();
             if (roboDexerUser == null)
             {
                 return RedirectToAction("Create");
             }
+            NavLayout();
             var userName = _repo.RoboDexer.FindByCondition(r => r.UserName == roboDexerUser.UserName).SingleOrDefault();
 
             return View(roboDexerUser);
@@ -89,7 +90,7 @@ namespace RoboDex__Capstone_.Controllers
         // GET: RoboDexerController/Create
         public ActionResult Create()
         {
-            NavLayout();
+            //NavLayout();
             RoboDexer roboDexer = new RoboDexer();
             return View(roboDexer);
         }
@@ -99,7 +100,7 @@ namespace RoboDex__Capstone_.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(RoboDexer robodexer)
         {
-            NavLayout();
+            //NavLayout();
             if (ModelState.IsValid)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -265,8 +266,6 @@ namespace RoboDex__Capstone_.Controllers
             var messages = readMessages.Count;
             ViewBag.UserCount = messages.ToString();
 
-            //return View(messages);
-            //return readMessages.Count;
         }
 
         public async Task<IActionResult> ReadInbox(int id)
@@ -340,7 +339,10 @@ namespace RoboDex__Capstone_.Controllers
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
             var shoppingCart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == loggedInRoboDexer.ShoppingCartId).FirstOrDefault();
-
+            if(shoppingCart == null)
+            {
+                //return View(shoppingCartItemsDetails);
+            }
             var items = _repo.ShoppingCart.FindByCondition(s => s.ItemId == shoppingCart.ItemId).ToList();
             var roboSeller = _repo.RoboDexer.FindByCondition(r => r.ShoppingCartId == shoppingCart.ShoppingCartId).SingleOrDefault();
             List<ShoppingCartItemsDetails> shoppingCartItemsDetails = new List<ShoppingCartItemsDetails>();

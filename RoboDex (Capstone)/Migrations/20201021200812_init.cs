@@ -68,7 +68,8 @@ namespace RoboDex__Capstone_.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InboxId = table.Column<int>(nullable: false),
                     Message = table.Column<string>(nullable: true),
-                    isRead = table.Column<bool>(nullable: false)
+                    isRead = table.Column<bool>(nullable: false),
+                    ItemId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -283,7 +284,7 @@ namespace RoboDex__Capstone_.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e9e46d5f-c8ec-4aef-8c8f-1ee75ec96a97", "52e6e297-944d-47c8-9b22-88c22f438bea", "RoboDexer", "ROBODEXER" });
+                values: new object[] { "99953078-1e96-479b-9419-d93866f0199e", "1c2f7623-cb32-42b4-8bc5-49c372bfe755", "RoboDexer", "ROBODEXER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

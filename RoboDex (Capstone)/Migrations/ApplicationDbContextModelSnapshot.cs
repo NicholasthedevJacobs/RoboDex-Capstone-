@@ -48,8 +48,8 @@ namespace RoboDex__Capstone_.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "27a6d60f-b0b9-49ae-b8f1-9217dc1d2e45",
-                            ConcurrencyStamp = "8f850e5a-5d9f-4084-9f81-cbca4e457c8f",
+                            Id = "99953078-1e96-479b-9419-d93866f0199e",
+                            ConcurrencyStamp = "1c2f7623-cb32-42b4-8bc5-49c372bfe755",
                             Name = "RoboDexer",
                             NormalizedName = "ROBODEXER"
                         });
