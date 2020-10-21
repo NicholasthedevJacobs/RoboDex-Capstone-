@@ -201,7 +201,8 @@ namespace RoboDex__Capstone_.Controllers
             message.isRead = true;
             _repo.Inbox.Update(message);
             _repo.Save();
-            return View(message);
+            return RedirectToAction("UpdateInbox");
+            //return View(message);
         }
 
         public ActionResult SubmitMessage(int cartId)
@@ -252,7 +253,7 @@ namespace RoboDex__Capstone_.Controllers
             List<Inbox> readMessages = new List<Inbox>();
             foreach (Inbox message in inbox)
             {
-                if (message.isRead == true)
+                if (message.isRead == false)
                 {
                     readMessages.Add(message);
                 }
