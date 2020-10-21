@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RoboDex__Capstone_.Contracts;
 using RoboDex__Capstone_.Models;
 
 namespace RoboDex__Capstone_.Controllers
@@ -13,9 +15,11 @@ namespace RoboDex__Capstone_.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+       
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+           
         }
 
         public IActionResult Index()
@@ -33,5 +37,6 @@ namespace RoboDex__Capstone_.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

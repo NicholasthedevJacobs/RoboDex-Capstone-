@@ -228,6 +228,31 @@ namespace RoboDex__Capstone_.Controllers
             }
             return View(unreadMessages);
         }
+       
+        public async Task<IActionResult> NavLayout()
+        {
+            var loggedInRoboDexer = FindLoggedInRoboDexer();
+
+            var inbox = await _repo.Inbox.FindByCondition(i => i.InboxId == loggedInRoboDexer.InboxId).ToListAsync();
+
+            List<Inbox> readMessages = new List<Inbox>();
+            foreach (Inbox message in inbox)
+            {
+                if (message.isRead == true)
+                {
+                    readMessages.Add(message);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            var messages = readMessages.Count;
+            ViewBag.UserCount = messages.ToString();
+
+            return View(messages);
+            //return readMessages.Count;
+        }
 
         public async Task<IActionResult> ReadInbox(int id)
         {

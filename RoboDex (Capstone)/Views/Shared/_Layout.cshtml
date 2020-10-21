@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@*@model IEnumerable<RoboDex__Capstone_.Models.Inbox>*@
+@{ 
+    ViewBag.Title = "NavLayout";
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -29,7 +35,17 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="RoboDexer" asp-action="ShoppingCart">Shopping Cart</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="RoboDexer" asp-action="UpdateInbox">Messages</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="RoboDexer" asp-action="UpdateInbox">
+                                Messages
+                             
+                             
+                                <h2>@*@ViewData.UserCount*@  </h2>
+                                @*@Model.Where(m => m.isRead == false).ToList().Count();*@
+                            </a>
+
+
+
+
                         </li>
                     </ul>
                 </div>
@@ -50,6 +66,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        @*var count ='@Model.Count()';*@
+
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

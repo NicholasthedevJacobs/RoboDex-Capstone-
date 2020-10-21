@@ -16,6 +16,8 @@ namespace RoboDex__Capstone_.Models
         public bool isRead { get; set; }
         [ForeignKey("Items")]
         public int ItemId { get; set; }
+        [NotMapped]
+        public int UnreadMessageCount { get; set; }
 
     }
 }
