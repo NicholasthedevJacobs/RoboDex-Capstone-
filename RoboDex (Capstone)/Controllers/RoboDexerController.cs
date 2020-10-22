@@ -75,7 +75,14 @@ namespace RoboDex__Capstone_.Controllers
         {
             var allTags = _repo.Tags.FindAll();
 
-            foreach(Items item in allFollowersItems)
+            var tagsThatMatch = tagsOfFollowerItems.Concat(tagsOfItemsInCart)
+                .GroupBy(x => x.TagId)
+                    .Where(x => x.Count() == 1)
+                    .Select(x => x.FirstOrDefault())
+                    .ToList();
+
+
+            foreach (Items item in allFollowersItems)
             {
 
             }
