@@ -41,6 +41,22 @@ namespace RoboDex__Capstone_.Controllers
             return View(roboDexerUser);
         }
 
+        private HashSet<int> GetVariousAmountsOfRandomNumbers(int itemCount)
+        {
+            HashSet<int> randomNumbers = new HashSet<int>();
+            Random rand = new Random();
+
+
+            while (randomNumbers.Count < itemCount)
+
+            {
+                randomNumbers.Add(rand.Next(0, itemCount));
+            }
+
+            return randomNumbers;
+
+        }
+
         private List<Items> FindNewItemsFromFollowers(List<Followers> peopleWhoDexerFollows)
         {
             var dateTime = FindDateTime();
