@@ -86,7 +86,7 @@ namespace RoboDex__Capstone_
             }
         }
         
-        public Contracts.IShoppingCartRepository ShoppingCart
+        public IShoppingCartRepository ShoppingCart
         {
             get
             {

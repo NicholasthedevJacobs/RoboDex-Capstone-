@@ -341,7 +341,8 @@ namespace RoboDex__Capstone_.Controllers
             var shoppingCart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == loggedInRoboDexer.ShoppingCartId).FirstOrDefault();
             if(shoppingCart == null)
             {
-                //return View(shoppingCartItemsDetails);
+                List<ShoppingCartItemsDetails> shoppingCartNull = new List<ShoppingCartItemsDetails>();
+                return View(shoppingCartNull);
             }
             var items = _repo.ShoppingCart.FindByCondition(s => s.ItemId == shoppingCart.ItemId).ToList();
             var roboSeller = _repo.RoboDexer.FindByCondition(r => r.ShoppingCartId == shoppingCart.ShoppingCartId).SingleOrDefault();
