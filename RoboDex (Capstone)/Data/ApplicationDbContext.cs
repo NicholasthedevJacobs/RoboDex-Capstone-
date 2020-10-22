@@ -26,8 +26,21 @@ namespace RoboDex__Capstone_.Data
                 NormalizedName = "ROBODEXER"
             }
             );
+
+            builder.Entity<ItemTags>()
+                .HasKey(bc => new { bc.ItemId, bc.TagsId });
+            builder.Entity<ItemTags>()
+                .HasOne(bc => bc.Item)
+                .WithMany(b => b.ItemTags)
+                .HasForeignKey(bc => bc.ItemId);
+            builder.Entity<ItemTags>()
+                .HasOne(bc => bc.Tag)
+                .WithMany(c => c.ItemTags)
+                .HasForeignKey(bc => bc.TagsId);
         }
 
+
+       
         public DbSet<RoboDexer> RoboDexer { get; set; }
         public DbSet<Inbox> Inbox { get; set; }
         public DbSet<Inventory> Inventory { get; set; }

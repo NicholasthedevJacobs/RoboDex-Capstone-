@@ -14,6 +14,5 @@ namespace RoboDex__Capstone_.Data
         {
         }
     }
-    {
-    }
+    
 }
