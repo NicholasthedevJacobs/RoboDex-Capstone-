@@ -511,9 +511,14 @@ namespace RoboDex__Capstone_.Controllers
 
                 itemTagsInfo.TagName = tag.Name;
                 itemTagsInfo.TagId = tag.TagId;
-                //var doodly = allItems.Where(a => a.TagId == tag.TagId).SingleOrDefault();
-                //itemTagsInfo.Item = doodly;
-                //listOfAllItems.Add(itemTagsInfo);                              
+                var items = _repo.ItemTags.FindByCondition(i => i.TagsId == tag.TagId).ToList();
+                foreach(ItemTags item in items)
+                {
+                    var foundItem = _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+                    itemTagsInfo.Item = foundItem;
+                    listOfAllItems.Add(itemTagsInfo);
+                }
+                                            
             }
             return View(listOfAllItems);
         }
