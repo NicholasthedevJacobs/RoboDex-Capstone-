@@ -176,8 +176,8 @@ namespace RoboDex__Capstone_.Controllers
             var locationToEdit = _repo.LocationPlace.FindByCondition(l => l.LocationId == itemToEdit.LocationId).SingleOrDefault();
             itemToEnterIntoView.LocationPlace = locationToEdit;
 
-            var tagsToEdit = _repo.Tags.FindByCondition(t => t.TagId == itemToEdit.TagId).SingleOrDefault();
-            itemToEnterIntoView.Tags = tagsToEdit;
+            //var tagsToEdit = _repo.Tags.FindByCondition(t => t.TagId == itemToEdit.TagId).SingleOrDefault();
+            //itemToEnterIntoView.Tags = tagsToEdit;
 
             return View(itemToEnterIntoView);
         }
@@ -194,8 +194,8 @@ namespace RoboDex__Capstone_.Controllers
             var locationToEdit = _repo.LocationPlace.FindByCondition(l => l.LocationId == itemToEdit.LocationId).SingleOrDefault();
             locationToEdit = itemTagsLocation.LocationPlace;
 
-            var tagsToEdit = _repo.Tags.FindByCondition(t => t.TagId == itemToEdit.TagId).SingleOrDefault();
-            tagsToEdit = itemTagsLocation.Tags;
+            //var tagsToEdit = _repo.Tags.FindByCondition(t => t.TagId == itemToEdit.TagId).SingleOrDefault();
+            //tagsToEdit = itemTagsLocation.Tags;
 
             _repo.Save();
             try
@@ -511,9 +511,9 @@ namespace RoboDex__Capstone_.Controllers
 
                 itemTagsInfo.TagName = tag.Name;
                 itemTagsInfo.TagId = tag.TagId;
-                var doodly = allItems.Where(a => a.TagId == tag.TagId).SingleOrDefault();
-                itemTagsInfo.Item = doodly;
-                listOfAllItems.Add(itemTagsInfo);                              
+                //var doodly = allItems.Where(a => a.TagId == tag.TagId).SingleOrDefault();
+                //itemTagsInfo.Item = doodly;
+                //listOfAllItems.Add(itemTagsInfo);                              
             }
             return View(listOfAllItems);
         }
@@ -535,9 +535,17 @@ namespace RoboDex__Capstone_.Controllers
 
             //adds the input tag into the tags table
             Tags tags = new Tags();
-            tags.Name = itemTagsLocation.Tags.Name;
-            _repo.Tags.Create(tags);
-            _repo.Save();
+            var listOfTags = itemTagsLocation.Tags.Name.Split(' ').ToList();
+            foreach(string tag in listOfTags)
+            {
+                tags.Name = tag;
+                _repo.Tags.Create(tags);
+                _repo.Save();
+            }
+            
+            //tags.Name = itemTagsLocation.Tags.Name;
+            //_repo.Tags.Create(tags);
+            //_repo.Save();
 
             //adds the item's location to the location table
             LocationPlace locationPlace = new LocationPlace();
@@ -550,7 +558,7 @@ namespace RoboDex__Capstone_.Controllers
             //adds the item to the items table
             var itemObject = itemTagsLocation.Items;
             itemObject.LocationId = locationPlace.LocationId;
-            itemObject.TagId = tags.TagId;
+            //itemObject.TagId = tags.TagId;
             itemObject.Price = itemTagsLocation.Items.Price;
             itemObject.TimeAdded = itemTagsLocation.Items.TimeAdded;
             _repo.Items.Create(itemObject);
@@ -586,13 +594,13 @@ namespace RoboDex__Capstone_.Controllers
                 {                   
                     var allInventory =  _repo.Inventory.FindByCondition(i => i.ItemId == roboDexerItems.ItemId).SingleOrDefault();
 
-                    var tags = _repo.Tags.FindByCondition(i => i.TagId == roboDexerItems.TagId).SingleOrDefault();
+                    //var tags = _repo.Tags.FindByCondition(i => i.TagId == roboDexerItems.TagId).SingleOrDefault();
 
                     var location = _repo.LocationPlace.FindByCondition(l => l.LocationId == roboDexerItems.LocationId).SingleOrDefault();
                     
                     itemTagsLocation.Inventory = item;
                     itemTagsLocation.Items = roboDexerItems;
-                    itemTagsLocation.Tags = tags;
+                    //itemTagsLocation.Tags = tags;
                     itemTagsLocation.LocationPlace = location;
                     
                     myItemsList.Add(itemTagsLocation);
@@ -623,10 +631,10 @@ namespace RoboDex__Capstone_.Controllers
 
                     var allInventory =  _repo.Inventory.FindByCondition(i => i.ItemId == inventoryToView.ItemId).SingleOrDefault();
 
-                    var tags = _repo.Tags.FindByCondition(i => i.TagId == roboDexerItems.TagId).SingleOrDefault();
+                    //var tags = _repo.Tags.FindByCondition(i => i.TagId == roboDexerItems.TagId).SingleOrDefault();
                     
-                    itemTagsLocation.Item = roboDexerItems;
-                    itemTagsLocation.TagName = tags.Name;
+                    //itemTagsLocation.Item = roboDexerItems;
+                    //itemTagsLocation.TagName = tags.Name;
 
                     myItemsList.Add(itemTagsLocation);
                 }                
@@ -644,13 +652,13 @@ namespace RoboDex__Capstone_.Controllers
         private ItemTagsLocation ConvertItemToItemTagsLocation(Items item)
         {
 
-            var tag = _repo.Tags.FindByCondition(t => t.TagId == item.TagId).SingleOrDefault();
+            //var tag = _repo.Tags.FindByCondition(t => t.TagId == item.TagId).SingleOrDefault();
             var location = _repo.LocationPlace.FindByCondition(l => l.LocationId == item.LocationId).SingleOrDefault();
 
             ItemTagsLocation itemTagsLocation = new ItemTagsLocation();
 
             itemTagsLocation.LocationPlace = location;
-            itemTagsLocation.Tags = tag;
+            //itemTagsLocation.Tags = tag;
             itemTagsLocation.Items = item;
 
             return (itemTagsLocation);

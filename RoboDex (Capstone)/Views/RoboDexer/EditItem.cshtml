@@ -13,7 +13,7 @@
         <form asp-action="EditItem">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Items.ItemId" />
-            <input type="hidden" asp-for="Items.TagId" class="form-control" />
+            @*<input type="hidden" asp-for="Items.TagId" class="form-control" />*@
             <input type="hidden" asp-for="Items.LocationId" class="form-control" />
             <div class="form-group">
                 <label asp-for="Items.IMGUrl" class="control-label"></label>
