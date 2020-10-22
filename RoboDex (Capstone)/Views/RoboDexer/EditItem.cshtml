@@ -13,7 +13,12 @@
         <form asp-action="EditItem">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Items.ItemId" />
-            @*<input type="hidden" asp-for="Items.TagId" class="form-control" />*@
+            <input type="hidden" asp-for="LocationPlace.LocationId" />
+            @for (int i = 0; i < Model.Tags.Count; i++)
+            {
+                <input type="hidden" asp-for="Tags[i].TagId" class="form-control" />
+            }
+
             <input type="hidden" asp-for="Items.LocationId" class="form-control" />
             <div class="form-group">
                 <label asp-for="Items.IMGUrl" class="control-label"></label>
@@ -40,11 +45,15 @@
                 <input asp-for="LocationPlace.SecondaryLocation" class="form-control" />
                 <span asp-validation-for="LocationPlace.SecondaryLocation" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Tags.Name" class="control-label"></label>
-                <input asp-for="Tags.Name" class="form-control" />
-                <span asp-validation-for="Tags.Name" class="text-danger"></span>
-            </div>
+            @for (int i = 0; i < Model.Tags.Count; i++)
+            {
+                <div class="form-group">
+                    <label asp-for="Tags[i].Name[i]" class="control-label"></label>
+                    <input asp-for="Tags[i].Name" class="form-control" />
+                    <span asp-validation-for="Tags[i].Name" class="text-danger"></span>
+                </div>
+            }
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

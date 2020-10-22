@@ -198,19 +198,20 @@ namespace RoboDex__Capstone_.Controllers
             NavLayout();
             var itemToEdit = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
             itemToEdit = itemTagsLocation.Items;
+            _repo.Items.Update(itemToEdit);
 
             var locationToEdit = _repo.LocationPlace.FindByCondition(l => l.LocationId == itemToEdit.LocationId).SingleOrDefault();
             locationToEdit = itemTagsLocation.LocationPlace;
+            _repo.LocationPlace.Update(locationToEdit);
 
-            var items = _repo.ItemTags.FindByCondition(i => i.TagsId == tag.TagId).ToList();
-            foreach (ItemTags item in items)
+            ItemTags itemTags = new ItemTags();
+            foreach(Tags tag in itemTagsLocation.Tags)
             {
-                var foundItem = _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
-                itemTagsInfo.Item = foundItem;
-                listOfAllItems.Add(itemTagsInfo);
+                var items = _repo.ItemTags.FindByCondition(i => i.TagsId == tag.TagId).SingleOrDefault();
+                var tagToEdit = _repo.Tags.FindByCondition(t => t.TagId == items.TagsId).SingleOrDefault();
+                tagToEdit.Name = tag.Name;
+                _repo.Tags.Update(tagToEdit);
             }
-            //var tagsToEdit = _repo.Tags.FindByCondition(t => t.TagId == itemToEdit.TagId).SingleOrDefault();
-            //tagsToEdit = itemTagsLocation.Tags;
 
             _repo.Save();
             try
@@ -578,7 +579,7 @@ namespace RoboDex__Capstone_.Controllers
 
             //here the logic splits user input into spereate tags, adds tags to the table, and 
             //then populates the itemtags table with the tags/item ids
-            var listOfTags = itemTagsLocation.Tags.Name.Split(' ').ToList();
+            var listOfTags = itemTagsLocation.TagsInitial.Name.Split(' ').ToList();
             foreach(string tag in listOfTags)
             {
                 Tags tags = new Tags();

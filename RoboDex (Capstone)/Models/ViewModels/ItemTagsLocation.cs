@@ -9,6 +9,7 @@ namespace RoboDex__Capstone_.Models.ViewModels
     {
         public Items Items { get; set; }
         public List<Tags> Tags { get; set; }
+        public Tags TagsInitial { get; set; }
         public string TagName { get; set; }
         public int TagId { get; set; }
         public LocationPlace LocationPlace { get; set; }
