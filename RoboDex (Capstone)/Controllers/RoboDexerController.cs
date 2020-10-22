@@ -49,6 +49,38 @@ namespace RoboDex__Capstone_.Controllers
             return peopleWhoDexerFollows;
         }
 
+        private List<Items> FindAllFollowersItems(List<Followers> followers)
+        {
+            List<Items> allFollowersItems = new List<Items>();
+            foreach(Followers follower in followers)
+            {
+                var followersItems = _repo.Items.FindAll();
+
+                foreach(Items item in followersItems)
+                {
+                    allFollowersItems.Add(item);
+                }
+
+            }
+            return allFollowersItems;
+        }
+
+        private void FindShoppingCart()
+        {
+            var roboDexerUser = FindLoggedInRoboDexer();
+
+            var shoppingcart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == roboDexerUser.ShoppingCartId).ToList();
+
+            foreach(ShoppingCart item in shoppingcart)
+            {
+
+            }
+        }
+
+        private void MatchTagsFromCartWithTagsFromFollowersItems(List<Items> allFollowersItems)
+        {
+
+        }
         // GET: RoboDexerController/Details/5
         public ActionResult Details(int id)
         {
@@ -390,6 +422,7 @@ namespace RoboDex__Capstone_.Controllers
 
         public ActionResult FollowedRoboDexers()
         {
+            //could probably call method that finds and returns people who they follow.
             NavLayout();
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
