@@ -176,7 +176,15 @@ namespace RoboDex__Capstone_.Controllers
             var locationToEdit = _repo.LocationPlace.FindByCondition(l => l.LocationId == itemToEdit.LocationId).SingleOrDefault();
             itemToEnterIntoView.LocationPlace = locationToEdit;
 
-            //var tagsToEdit = _repo.Tags.FindByCondition(t => t.TagId == itemToEdit.TagId).SingleOrDefault();
+            var itemTags = _repo.ItemTags.FindByCondition(i => i.ItemId == itemToEdit.ItemId).ToList();
+
+            List<Tags> listOfTags = new List<Tags>();
+            foreach(ItemTags itemtag in itemTags)
+            {
+                var tags = _repo.Tags.FindByCondition(t => t.TagId == itemtag.TagsId).SingleOrDefault();
+                listOfTags.Add(tags);
+            }
+            itemToEnterIntoView.Tags = listOfTags;
             //itemToEnterIntoView.Tags = tagsToEdit;
 
             return View(itemToEnterIntoView);
@@ -194,6 +202,13 @@ namespace RoboDex__Capstone_.Controllers
             var locationToEdit = _repo.LocationPlace.FindByCondition(l => l.LocationId == itemToEdit.LocationId).SingleOrDefault();
             locationToEdit = itemTagsLocation.LocationPlace;
 
+            var items = _repo.ItemTags.FindByCondition(i => i.TagsId == tag.TagId).ToList();
+            foreach (ItemTags item in items)
+            {
+                var foundItem = _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+                itemTagsInfo.Item = foundItem;
+                listOfAllItems.Add(itemTagsInfo);
+            }
             //var tagsToEdit = _repo.Tags.FindByCondition(t => t.TagId == itemToEdit.TagId).SingleOrDefault();
             //tagsToEdit = itemTagsLocation.Tags;
 
