@@ -18,6 +18,7 @@ namespace RoboDex__Capstone_
         private IRoboDexerRepository _roboDexer;
         private IShoppingCartRepository _shoppingCart;
         private ITagsRepository _tags;
+        private IItemTagsRepository _itemTags;
 
         public IFollowersRepository Followers
         {
@@ -97,6 +98,7 @@ namespace RoboDex__Capstone_
                 return _shoppingCart;
             }
         }
+
         public ITagsRepository Tags
         {
             get
@@ -106,6 +108,18 @@ namespace RoboDex__Capstone_
                     _tags = new TagsRepository(_context);
                 }
                 return _tags;
+            }
+        }
+
+        public IItemTagsRepository ItemTags
+        {
+            get
+            {
+                if (_itemTags == null)
+                {
+                    _itemTags = new ItemTagsRepository(_context);
+                }
+                return _itemTags;
             }
         }
 

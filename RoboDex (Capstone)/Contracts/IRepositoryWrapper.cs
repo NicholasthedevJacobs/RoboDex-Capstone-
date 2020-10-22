@@ -15,6 +15,7 @@ namespace RoboDex__Capstone_.Contracts
         IRoboDexerRepository RoboDexer { get; }
         IShoppingCartRepository ShoppingCart { get; }
         ITagsRepository Tags { get; }
+        IItemTagsRepository ItemTags { get; }
 
         void Save();
 

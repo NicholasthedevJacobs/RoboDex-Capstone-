@@ -16,5 +16,7 @@ namespace RoboDex__Capstone_.Models
         [Key, Column(Order = 2)]
         public int TagsId { get; set; }
         public Tags Tag { get; set; }
+
+        
     }
 }

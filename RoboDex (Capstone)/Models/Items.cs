@@ -19,6 +19,7 @@ namespace RoboDex__Capstone_.Models
         public string Name { get; set; }
         public double Price { get; set; }
         public DateTime TimeAdded { get; set; }
+        public ICollection<ItemTags> ItemTags { get; set; }
 
         public Items()
         {

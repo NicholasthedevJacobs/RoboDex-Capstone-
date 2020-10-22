@@ -36,5 +36,6 @@ namespace RoboDex__Capstone_.Data
         public DbSet<LocationPlace> LocationPlace { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Tags> Tags { get; set; }
+        public DbSet<ItemTags> ItemTags { get; set; }
     }
 }

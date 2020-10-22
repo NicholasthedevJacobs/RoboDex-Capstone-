@@ -11,6 +11,6 @@ namespace RoboDex__Capstone_.Models
         [Key]
         public int TagId { get; set; }
         public string Name { get; set; }
-
+        public ICollection<ItemTags> ItemTags { get; set; }
     }
 }
