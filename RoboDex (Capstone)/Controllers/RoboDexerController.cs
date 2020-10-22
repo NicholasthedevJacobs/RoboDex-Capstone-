@@ -41,6 +41,14 @@ namespace RoboDex__Capstone_.Controllers
             return View(roboDexerUser);
         }
 
+        private List<Followers> CheckForPeopleDexerFollows()
+        {
+            var roboDexerUser = FindLoggedInRoboDexer();
+
+            var peopleWhoDexerFollows = _repo.Followers.FindByCondition(f => f.FollowerId == roboDexerUser.RoboDexerId).ToList();
+            return peopleWhoDexerFollows;
+        }
+
         // GET: RoboDexerController/Details/5
         public ActionResult Details(int id)
         {
