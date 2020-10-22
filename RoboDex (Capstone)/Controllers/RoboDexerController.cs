@@ -59,21 +59,47 @@ namespace RoboDex__Capstone_.Controllers
 
         private List<Items> CheckIfListOfItemsCountIsEnough(List<Items> itemsThatMatch)
         {
-            if(itemsThatMatch.Count >= 6)
+            List<Items> finalList = new List<Items>();
+            if (itemsThatMatch.Count >= 6)
             {
                 var listOfNumbers = GetVariousAmountsOfRandomNumbers(itemsThatMatch.Count);
-                List<Items> finalList = new List<Items>();
+                
 
                 foreach (int number in listOfNumbers)
                 {
                     finalList.Add(itemsThatMatch[number]);
                 }
-                return finalList;
+                
             }
             else
             {
-                //here need to find remaining amount to fill the ~6 needed, from random items in any inventory.
+                var allItems = PopulateListOfAllItems();
+                foreach(Items item in itemsThatMatch)
+                {
+                    finalList.Add(item);
+                }
+
+                var listOfExtraItems = CompareNewItemsWithItemsFromTags(allItems, itemsThatMatch);
+
+                var listOfNumbers = GetVariousAmountsOfRandomNumbers(finalList.Count);
+
+                foreach(int number in listOfNumbers)
+                {
+                    finalList.Add(listOfExtraItems[number]);
+                }               
             }
+            return finalList;
+        }
+
+        private List<Items> PopulateListOfAllItems()
+        {
+            var allItems = _repo.Items.FindAll();
+            List<Items> finalList = new List<Items>();
+            foreach(Items item in allItems)
+            {
+                finalList.Add(item);
+            }
+            return finalList;
         }
        
         private List<Items> CompareNewItemsWithItemsFromTags(List<Items> listOfItemsFromTags, List<Items> newItems)
