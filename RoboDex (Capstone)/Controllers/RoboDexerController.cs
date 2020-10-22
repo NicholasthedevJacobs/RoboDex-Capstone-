@@ -61,9 +61,20 @@ namespace RoboDex__Capstone_.Controllers
         }
 
         private DateTime FindDateTime()
-        {           
+        {
             return DateTime.Now;
         }
+
+        private List<Items> CompareNewItemsWithItemsFromTags(List<Items> listOfItemsFromTags, List<Items> newItems)
+        {
+            var itemsThatMatch = listOfItemsFromTags.Concat(newItems)
+                .GroupBy(x => x.ItemId)
+                    .Where(x => x.Count() == 1)
+                    .Select(x => x.FirstOrDefault())
+                    .ToList();
+
+            return itemsThatMatch;
+        }      
 
         private List<Followers> CheckForPeopleDexerFollows()
         {
