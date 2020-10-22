@@ -533,44 +533,46 @@ namespace RoboDex__Capstone_.Controllers
             //finds the logged in user
             var loggedInRoboDexer = FindLoggedInRoboDexer();
 
-            //adds the input tag into the tags table
-            Tags tags = new Tags();
-            var listOfTags = itemTagsLocation.Tags.Name.Split(' ').ToList();
-            foreach(string tag in listOfTags)
-            {
-                tags.Name = tag;
-                _repo.Tags.Create(tags);
-                _repo.Save();
-            }
-            
-            //tags.Name = itemTagsLocation.Tags.Name;
-            //_repo.Tags.Create(tags);
-            //_repo.Save();
-
             //adds the item's location to the location table
             LocationPlace locationPlace = new LocationPlace();
             locationPlace.MainLocation = itemTagsLocation.LocationPlace.MainLocation;
             locationPlace.SecondaryLocation = itemTagsLocation.LocationPlace.SecondaryLocation;
-
             _repo.LocationPlace.Create(locationPlace);
             _repo.Save();
 
-            //adds the item to the items table
+            //adds all info into the item object and saves
             var itemObject = itemTagsLocation.Items;
             itemObject.LocationId = locationPlace.LocationId;
-            //itemObject.TagId = tags.TagId;
             itemObject.Price = itemTagsLocation.Items.Price;
             itemObject.TimeAdded = itemTagsLocation.Items.TimeAdded;
             _repo.Items.Create(itemObject);
             _repo.Save();
 
-            //adds the created item to the inventory table
+            //adds the item to the user's inventory
             Inventory inventory = new Inventory();
             inventory.ItemId = itemObject.ItemId;
             inventory.RoboDexerId = loggedInRoboDexer.RoboDexerId;
             _repo.Inventory.Create(inventory);
             _repo.Save();
-          
+           
+
+            //here the logic splits user input into spereate tags, adds tags to the table, and 
+            //then populates the itemtags table with the tags/item ids
+            var listOfTags = itemTagsLocation.Tags.Name.Split(' ').ToList();
+            foreach(string tag in listOfTags)
+            {
+                Tags tags = new Tags();
+                tags.Name = tag;
+                _repo.Tags.Create(tags);
+                _repo.Save();
+
+               
+                ItemTags itemTags = new ItemTags();
+                itemTags.ItemId = itemObject.ItemId;
+                itemTags.TagsId = tags.TagId;
+                _repo.ItemTags.Create(itemTags);
+                _repo.Save();              
+            }         
             return RedirectToAction("Index");
         }
 
