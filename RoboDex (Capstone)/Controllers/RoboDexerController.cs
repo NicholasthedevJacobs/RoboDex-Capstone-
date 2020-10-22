@@ -65,22 +65,39 @@ namespace RoboDex__Capstone_.Controllers
             return allFollowersItems;
         }
 
-        private void FindShoppingCart()
+        private void MatchTagsFromCartWithTagsFromFollowersItems(List<Items> allFollowersItems)
         {
-            var roboDexerUser = FindLoggedInRoboDexer();
+            var allTags = _repo.Tags.FindAll();
 
-            var shoppingcart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == roboDexerUser.ShoppingCartId).ToList();
-
-            foreach(ShoppingCart item in shoppingcart)
+            foreach(Items item in allFollowersItems)
             {
 
             }
         }
 
-        private void MatchTagsFromCartWithTagsFromFollowersItems(List<Items> allFollowersItems)
+        private List<Tags> FindTagsInShoppingCart()
         {
+            var roboDexerUser = FindLoggedInRoboDexer();
 
+            var shoppingcart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == roboDexerUser.ShoppingCartId).ToList();
+
+            List<Items> items = new List<Items>();
+            foreach(ShoppingCart cart in shoppingcart)
+            {
+                var itemInCart = _repo.Items.FindByCondition(s => s.ItemId == cart.ItemId).SingleOrDefault();
+                items.Add(itemInCart);
+            }
+
+            List<Tags> tagsOfItemsInCart = new List<Tags>();
+            foreach(Items item in items)
+            {
+                var itemTags = _repo.ItemTags.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+                var tag = _repo.Tags.FindByCondition(t => t.TagId == itemTags.TagsId).SingleOrDefault();
+                tagsOfItemsInCart.Add(tag);
+            }
+            return tagsOfItemsInCart;
         }
+       
         // GET: RoboDexerController/Details/5
         public ActionResult Details(int id)
         {
