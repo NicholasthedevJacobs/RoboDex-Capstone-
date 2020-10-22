@@ -71,7 +71,7 @@ namespace RoboDex__Capstone_.Controllers
             return tagsOfFollowerItems;
         }
 
-        private void MatchTagsFromCartWithTagsFromFollowersItems(List<Tags> tagsOfFollowerItems, List<Tags> tagsOfItemsInCart)
+        private List<Tags> MatchTagsFromCartWithTagsFromFollowersItems(List<Tags> tagsOfFollowerItems, List<Tags> tagsOfItemsInCart)
         {
             var allTags = _repo.Tags.FindAll();
 
@@ -81,11 +81,20 @@ namespace RoboDex__Capstone_.Controllers
                     .Select(x => x.FirstOrDefault())
                     .ToList();
 
+            return tagsThatMatch;
+        }
 
-            foreach (Items item in allFollowersItems)
+        private List<Items> FindFinalListOfItemsToReturnFromTags(List<Tags> tagsThatMatch)
+        {
+            List<Items> listOfItemsFromTags = new List<Items>();
+            foreach(Tags tag in tagsThatMatch)
             {
+                var itemTags = _repo.ItemTags.FindByCondition(i => i.TagsId == tag.TagId).SingleOrDefault();
+                var itemToAdd = _repo.Items.FindByCondition(i => i.ItemId == itemTags.ItemId).SingleOrDefault();
 
+                listOfItemsFromTags.Add(itemToAdd);
             }
+            return listOfItemsFromTags;
         }
 
         private List<Items> FindItemsInShoppingCart()
