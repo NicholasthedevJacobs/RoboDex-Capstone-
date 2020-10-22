@@ -57,6 +57,41 @@ namespace RoboDex__Capstone_.Controllers
 
         }
 
+        private List<Items> CheckIfListOfItemsCountIsEnough(List<Items> itemsThatMatch)
+        {
+            if(itemsThatMatch.Count >= 6)
+            {
+                var listOfNumbers = GetVariousAmountsOfRandomNumbers(itemsThatMatch.Count);
+                List<Items> finalList = new List<Items>();
+
+                foreach (int number in listOfNumbers)
+                {
+                    finalList.Add(itemsThatMatch[number]);
+                }
+                return finalList;
+            }
+            else
+            {
+                //here need to find remaining amount to fill the ~6 needed, from random items in any inventory.
+            }
+        }
+       
+        private List<Items> CompareNewItemsWithItemsFromTags(List<Items> listOfItemsFromTags, List<Items> newItems)
+        {
+            var itemsThatMatch = listOfItemsFromTags.Concat(newItems)
+                .GroupBy(x => x.ItemId)
+                    .Where(x => x.Count() == 1)
+                    .Select(x => x.FirstOrDefault())
+                    .ToList();
+
+            return itemsThatMatch;
+        }
+
+        private DateTime FindDateTime()
+        {
+            return DateTime.Now;
+        } 
+
         private List<Items> FindNewItemsFromFollowers(List<Followers> peopleWhoDexerFollows)
         {
             var dateTime = FindDateTime();
@@ -76,21 +111,18 @@ namespace RoboDex__Capstone_.Controllers
             return newItems;
         }
 
-        private DateTime FindDateTime()
+        private List<Items> FindFinalListOfItemsToReturnFromTags(List<Tags> tagsThatMatch)
         {
-            return DateTime.Now;
-        }
+            List<Items> listOfItemsFromTags = new List<Items>();
+            foreach (Tags tag in tagsThatMatch)
+            {
+                var itemTags = _repo.ItemTags.FindByCondition(i => i.TagsId == tag.TagId).SingleOrDefault();
+                var itemToAdd = _repo.Items.FindByCondition(i => i.ItemId == itemTags.ItemId).SingleOrDefault();
 
-        private List<Items> CompareNewItemsWithItemsFromTags(List<Items> listOfItemsFromTags, List<Items> newItems)
-        {
-            var itemsThatMatch = listOfItemsFromTags.Concat(newItems)
-                .GroupBy(x => x.ItemId)
-                    .Where(x => x.Count() == 1)
-                    .Select(x => x.FirstOrDefault())
-                    .ToList();
-
-            return itemsThatMatch;
-        }      
+                listOfItemsFromTags.Add(itemToAdd);
+            }
+            return listOfItemsFromTags;//retrun this to the master aggregator 
+        }             
 
         private List<Followers> CheckForPeopleDexerFollows()
         {
@@ -133,20 +165,7 @@ namespace RoboDex__Capstone_.Controllers
                     .ToList();
 
             return tagsThatMatch;
-        }
-
-        private List<Items> FindFinalListOfItemsToReturnFromTags(List<Tags> tagsThatMatch)
-        {
-            List<Items> listOfItemsFromTags = new List<Items>();
-            foreach(Tags tag in tagsThatMatch)
-            {
-                var itemTags = _repo.ItemTags.FindByCondition(i => i.TagsId == tag.TagId).SingleOrDefault();
-                var itemToAdd = _repo.Items.FindByCondition(i => i.ItemId == itemTags.ItemId).SingleOrDefault();
-
-                listOfItemsFromTags.Add(itemToAdd);
-            }
-            return listOfItemsFromTags;//retrun this to the master aggregator 
-        }
+        }        
 
         private List<Items> FindItemsInShoppingCart()
         {
