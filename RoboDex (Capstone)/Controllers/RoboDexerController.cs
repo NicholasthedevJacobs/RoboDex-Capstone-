@@ -41,6 +41,30 @@ namespace RoboDex__Capstone_.Controllers
             return View(roboDexerUser);
         }
 
+        private List<Items> FindNewItemsFromFollowers(List<Followers> peopleWhoDexerFollows)
+        {
+            var dateTime = FindDateTime();
+            var followersItems = FindAllFollowersItems(peopleWhoDexerFollows);
+
+            DateTime sevenDaysAgo = dateTime.AddDays(-7);
+
+            List<Items> newItems = new List<Items>();
+
+            foreach (Items item in followersItems)
+            {
+                if(item.TimeAdded > sevenDaysAgo)
+                {
+                    newItems.Add(item);
+                }
+            }
+            return newItems;
+        }
+
+        private DateTime FindDateTime()
+        {           
+            return DateTime.Now;
+        }
+
         private List<Followers> CheckForPeopleDexerFollows()
         {
             var roboDexerUser = FindLoggedInRoboDexer();
@@ -94,7 +118,7 @@ namespace RoboDex__Capstone_.Controllers
 
                 listOfItemsFromTags.Add(itemToAdd);
             }
-            return listOfItemsFromTags;
+            return listOfItemsFromTags;//retrun this to the master aggregator 
         }
 
         private List<Items> FindItemsInShoppingCart()
