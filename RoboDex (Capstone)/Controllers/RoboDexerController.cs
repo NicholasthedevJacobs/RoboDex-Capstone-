@@ -510,6 +510,7 @@ namespace RoboDex__Capstone_.Controllers
             var itemObject = itemTagsLocation.Items;
             itemObject.LocationId = locationPlace.LocationId;
             itemObject.TagId = tags.TagId;
+            itemObject.Price = itemTagsLocation.Items.Price;
             _repo.Items.Create(itemObject);
             _repo.Save();
 
