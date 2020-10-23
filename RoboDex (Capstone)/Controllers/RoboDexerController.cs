@@ -110,15 +110,44 @@ namespace RoboDex__Capstone_.Controllers
             return finalList;
         }
        
-        private List<Items> CompareNewItemsWithItemsFromTags(List<Items> listOfItemsFromTags, List<Items> newItems)
+        private List<Items> CompareNewItemsWithItemsFromTags(List<Items> newItems, List<Items> listOfItemsFromTags)
         {
-            var itemsThatMatch = listOfItemsFromTags.Concat(newItems)
-                .GroupBy(x => x.ItemId)
-                    .Where(x => x.Count() == 1)
-                    .Select(x => x.FirstOrDefault())
-                    .ToList();
+            List<Items> items = new List<Items>();
 
-            return itemsThatMatch;
+
+            //This compares both list in the incoming method parameters.
+            var dictionary = new Dictionary<Items, int>();
+            foreach (Items item in newItems)
+            {
+                if (dictionary.ContainsKey(item))
+                {
+                    dictionary[item]++;
+                }
+                else
+                {
+                    dictionary.Add(item, 1);
+                }
+            }
+            foreach (Items item in listOfItemsFromTags)
+            {
+                if (dictionary.ContainsKey(item))
+                {
+                    dictionary[item]--;
+                }
+                else
+                {
+                    
+                }
+            }
+
+            //This converts Keys from dictionary into a list
+            for(int i = 0; i < dictionary.Count; i++)
+            {
+                items = dictionary.Keys.ToList();
+            }
+            
+
+            return items;
         }
 
         private DateTime FindDateTime()
