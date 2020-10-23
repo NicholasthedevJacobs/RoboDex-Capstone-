@@ -23,13 +23,10 @@ namespace RoboDex__Capstone_.Controllers
         public RoboDexerController(IRepositoryWrapper repo)
         {
             _repo = repo;
-
         }
         // GET: RoboDexerController
         public ActionResult Index()
-        {
-           
-
+        {           
             var roboDexerUser = FindLoggedInRoboDexer();
             if (roboDexerUser == null)
             {
@@ -51,7 +48,6 @@ namespace RoboDex__Capstone_.Controllers
             var newItems = FindNewItemsFromFollowers(followers);
             var finalListItems = CompareNewItemsWithItemsFromTags(newItems, items1);
             var itemsForView = CheckIfListOfItemsCountIsEnough(finalListItems);
-            //var allItems = PopulateListOfAllItems();
 
             return View(itemsForView);
         }
@@ -61,7 +57,6 @@ namespace RoboDex__Capstone_.Controllers
             HashSet<int> randomNumbers = new HashSet<int>();
             Random rand = new Random();
 
-
             while (randomNumbers.Count < itemCount)
 
             {
@@ -69,7 +64,6 @@ namespace RoboDex__Capstone_.Controllers
             }
 
             return randomNumbers;
-
         }
 
         private List<Items> CheckIfListOfItemsCountIsEnough(List<Items> itemsThatMatch)
@@ -83,8 +77,7 @@ namespace RoboDex__Capstone_.Controllers
                 foreach (int number in listOfNumbers)
                 {
                     finalList.Add(itemsThatMatch[number]);
-                }
-                
+                }              
             }
             else
             {
@@ -814,8 +807,7 @@ namespace RoboDex__Capstone_.Controllers
                     }
 
                     var allInventory =  _repo.Inventory.FindByCondition(i => i.ItemId == inventoryToView.ItemId).SingleOrDefault();
-
-                    //var tags = _repo.Tags.FindByCondition(i => i.TagId == roboDexerItems.TagId).SingleOrDefault();
+                    itemTagsLocation.Item = roboDexerItems;                    
                     
                     //itemTagsLocation.Item = roboDexerItems;
                     //itemTagsLocation.TagName = tags.Name;

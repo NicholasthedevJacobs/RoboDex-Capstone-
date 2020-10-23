@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RoboDex__Capstone_.Migrations
 {
-    public partial class uhu : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -308,7 +308,7 @@ namespace RoboDex__Capstone_.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e895532f-08a1-4513-99fe-5261fe1a195c", "c94fb73d-8c11-4fc1-a65f-31e6f68d4e6c", "RoboDexer", "ROBODEXER" });
+                values: new object[] { "02b8314f-9cd0-41e7-b238-b8a5d0f8b0e4", "3a7c2d65-dcc7-4541-bc17-e996898d31cb", "RoboDexer", "ROBODEXER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

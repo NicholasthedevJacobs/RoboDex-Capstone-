@@ -24,9 +24,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model[0].Item.IMGUrl)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model[0].TagName)
-                    </th>
+                    
 
                 </tr>
             </thead>
@@ -44,9 +42,7 @@
                     <td>
                         @Html.DisplayFor(model => model[i].Item.IMGUrl)
                     </td>
-                    <td>
-                        @Html.DisplayFor(model => model[i].TagName)
-                    </td>
+                    
                     <td>
                         <a asp-action="ItemDetails" asp-route-id="@ViewData.Model[i].Item.ItemId">Details</a> 
                     </td>
