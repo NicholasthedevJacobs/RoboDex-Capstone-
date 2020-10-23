@@ -51,223 +51,6 @@ namespace RoboDex__Capstone_.Controllers
 
             return View(itemsForView);
         }
-
-        private HashSet<int> GetVariousAmountsOfRandomNumbers(int itemCount)
-        {
-            HashSet<int> randomNumbers = new HashSet<int>();
-            Random rand = new Random();
-
-            while (randomNumbers.Count < itemCount)
-
-            {
-                randomNumbers.Add(rand.Next(0, itemCount));
-            }
-
-            return randomNumbers;
-        }
-
-        private List<Items> CheckIfListOfItemsCountIsEnough(List<Items> itemsThatMatch)
-        {
-            List<Items> finalList = new List<Items>();
-            if (itemsThatMatch.Count >= 6)
-            {
-                var listOfNumbers = GetVariousAmountsOfRandomNumbers(itemsThatMatch.Count);
-                
-
-                foreach (int number in listOfNumbers)
-                {
-                    finalList.Add(itemsThatMatch[number]);
-                }              
-            }
-            else
-            {
-                var allItems = PopulateListOfAllItems();
-                foreach(Items item in itemsThatMatch)
-                {
-                    finalList.Add(item);
-                }
-
-                var listOfExtraItems = CompareNewItemsWithItemsFromTags(allItems, itemsThatMatch);
-
-                var listOfNumbers = GetVariousAmountsOfRandomNumbers(finalList.Count);
-
-                foreach(int number in listOfNumbers)
-                {
-                    finalList.Add(listOfExtraItems[number]);
-                }               
-            }
-            return finalList;
-        }
-
-        private List<Items> PopulateListOfAllItems()
-        {
-            var allItems = _repo.Items.FindAll();
-            List<Items> finalList = new List<Items>();
-            foreach(Items item in allItems)
-            {
-                finalList.Add(item);
-            }
-            return finalList;
-        }
-       
-        private List<Items> CompareNewItemsWithItemsFromTags(List<Items> newItems, List<Items> listOfItemsFromTags)
-        {
-            List<Items> items = new List<Items>();
-
-
-            //This compares both list in the incoming method parameters.
-            var dictionary = new Dictionary<Items, int>();
-            foreach (Items item in newItems)
-            {
-                if (dictionary.ContainsKey(item))
-                {
-                    dictionary[item]++;
-                }
-                else
-                {
-                    dictionary.Add(item, 1);
-                }
-            }
-            foreach (Items item in listOfItemsFromTags)
-            {
-                if (dictionary.ContainsKey(item))
-                {
-                    dictionary[item]--;
-                }
-                else
-                {
-                    
-                }
-            }
-
-            //This converts Keys from dictionary into a list
-            for(int i = 0; i < dictionary.Count; i++)
-            {
-                items = dictionary.Keys.ToList();
-            }
-            
-
-            return items;
-        }
-
-        private DateTime FindDateTime()
-        {
-            return DateTime.Now;
-        } 
-
-        private List<Items> FindNewItemsFromFollowers(List<Followers> peopleWhoDexerFollows)
-        {
-            var dateTime = FindDateTime();
-            var followersItems = FindAllFollowersItems(peopleWhoDexerFollows);
-
-            DateTime sevenDaysAgo = dateTime.AddDays(-7);
-
-            List<Items> newItems = new List<Items>();
-
-            foreach (Items item in followersItems)
-            {
-                if(item.TimeAdded > sevenDaysAgo)
-                {
-                    newItems.Add(item);
-                }
-            }
-            return newItems;
-        }
-
-        private List<Items> FindFinalListOfItemsToReturnFromTags(List<Tags> tagsThatMatch)
-        {
-            //#6
-            List<Items> listOfItemsFromTags = new List<Items>();
-            foreach (Tags tag in tagsThatMatch)
-            {
-                var itemTags = _repo.ItemTags.FindByCondition(i => i.TagsId == tag.TagId).SingleOrDefault();
-                var itemToAdd = _repo.Items.FindByCondition(i => i.ItemId == itemTags.ItemId).SingleOrDefault();
-
-                listOfItemsFromTags.Add(itemToAdd);
-            }
-            return listOfItemsFromTags;//retrun this to the master aggregator 
-        }             
-
-        private List<Followers> CheckForPeopleDexerFollows()
-        {
-            //#4
-            var roboDexerUser = FindLoggedInRoboDexer();
-
-            var peopleWhoDexerFollows = _repo.Followers.FindByCondition(f => f.FollowerId == roboDexerUser.RoboDexerId).ToList();
-            return peopleWhoDexerFollows;
-        }
-
-        private List<Items> FindAllFollowersItems(List<Followers> followers)
-        {
-            //#5
-            List<Items> allFollowersItems = new List<Items>();
-            foreach(Followers follower in followers)
-            {
-                //var followersItems = _repo.Items.FindAll();
-                var inventory = _repo.Inventory.FindByCondition(i => i.RoboDexerId == follower.RoboDexerId).ToList();
-
-                foreach(Inventory item in inventory)
-                {                    
-                    var theItem = _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
-                    allFollowersItems.Add(theItem);
-                }              
-            }
-            return allFollowersItems;
-        }
-
-        private List<Tags> FindTagsInFollowersItems(List<Items> allFollowersItems)
-        {
-            //#3
-            var tagsOfFollowerItems = FindTagsFromItems(allFollowersItems);
-            return tagsOfFollowerItems;
-        }
-
-        private List<Tags> MatchTagsFromCartWithTagsFromFollowersItems(List<Tags> tagsOfFollowerItems, List<Tags> tagsOfItemsInCart)
-        {
-            var allTags = _repo.Tags.FindAll();
-
-            var tagsThatMatch = tagsOfFollowerItems.Concat(tagsOfItemsInCart)
-                .GroupBy(x => x.TagId)
-                    .Where(x => x.Count() == 1)
-                    .Select(x => x.FirstOrDefault())
-                    .ToList();
-
-            return tagsThatMatch;
-        }        
-
-        private List<Items> FindItemsInShoppingCart()
-        {
-            //#1
-            var roboDexerUser = FindLoggedInRoboDexer();
-
-            var shoppingcart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == roboDexerUser.ShoppingCartId).ToList();
-
-            List<Items> items = new List<Items>();
-            foreach(ShoppingCart cart in shoppingcart)
-            {
-                var itemInCart = _repo.Items.FindByCondition(s => s.ItemId == cart.ItemId).SingleOrDefault();
-                items.Add(itemInCart);
-            }
-    
-            return items;//this goes into FindTagsFromItems parameter
-        }
-
-        private List<Tags> FindTagsFromItems(List<Items> items)
-        {
-            //#2
-            List<Tags> tagsOfItemsInCart = new List<Tags>();
-            foreach (Items item in items)
-            {
-                var itemTags = _repo.ItemTags.FindByCondition(i => i.ItemId == item.ItemId).ToList();
-                foreach(ItemTags tags in itemTags)
-                {
-                    var tag = _repo.Tags.FindByCondition(t => t.TagId == tags.TagsId).SingleOrDefault();
-                    tagsOfItemsInCart.Add(tag);
-                }
-                               
-            }
-            return tagsOfItemsInCart;//this goes into MatchTagsFromCartWithTagsFromFollowersItems parameter
-        }
        
         // GET: RoboDexerController/Details/5
         public ActionResult Details(int id)
@@ -872,6 +655,223 @@ namespace RoboDex__Capstone_.Controllers
             itemTagsLocation.Items = item;
 
             return (itemTagsLocation);
+        }
+
+        private HashSet<int> GetVariousAmountsOfRandomNumbers(int itemCount)
+        {
+            HashSet<int> randomNumbers = new HashSet<int>();
+            Random rand = new Random();
+
+            while (randomNumbers.Count < itemCount)
+
+            {
+                randomNumbers.Add(rand.Next(0, itemCount));
+            }
+
+            return randomNumbers;
+        }
+
+        private List<Items> CheckIfListOfItemsCountIsEnough(List<Items> itemsThatMatch)
+        {
+            List<Items> finalList = new List<Items>();
+            if (itemsThatMatch.Count >= 6)
+            {
+                var listOfNumbers = GetVariousAmountsOfRandomNumbers(itemsThatMatch.Count);
+
+
+                foreach (int number in listOfNumbers)
+                {
+                    finalList.Add(itemsThatMatch[number]);
+                }
+            }
+            else
+            {
+                var allItems = PopulateListOfAllItems();
+                foreach (Items item in itemsThatMatch)
+                {
+                    finalList.Add(item);
+                }
+
+                var listOfExtraItems = CompareNewItemsWithItemsFromTags(allItems, itemsThatMatch);
+
+                var listOfNumbers = GetVariousAmountsOfRandomNumbers(finalList.Count);
+
+                foreach (int number in listOfNumbers)
+                {
+                    finalList.Add(listOfExtraItems[number]);
+                }
+            }
+            return finalList;
+        }
+
+        private List<Items> PopulateListOfAllItems()
+        {
+            var allItems = _repo.Items.FindAll();
+            List<Items> finalList = new List<Items>();
+            foreach (Items item in allItems)
+            {
+                finalList.Add(item);
+            }
+            return finalList;
+        }
+
+        private List<Items> CompareNewItemsWithItemsFromTags(List<Items> newItems, List<Items> listOfItemsFromTags)
+        {
+            List<Items> items = new List<Items>();
+
+
+            //This compares both list in the incoming method parameters.
+            var dictionary = new Dictionary<Items, int>();
+            foreach (Items item in newItems)
+            {
+                if (dictionary.ContainsKey(item))
+                {
+                    dictionary[item]++;
+                }
+                else
+                {
+                    dictionary.Add(item, 1);
+                }
+            }
+            foreach (Items item in listOfItemsFromTags)
+            {
+                if (dictionary.ContainsKey(item))
+                {
+                    dictionary[item]--;
+                }
+                else
+                {
+
+                }
+            }
+
+            //This converts Keys from dictionary into a list
+            for (int i = 0; i < dictionary.Count; i++)
+            {
+                items = dictionary.Keys.ToList();
+            }
+
+
+            return items;
+        }
+
+        private DateTime FindDateTime()
+        {
+            return DateTime.Now;
+        }
+
+        private List<Items> FindNewItemsFromFollowers(List<Followers> peopleWhoDexerFollows)
+        {
+            var dateTime = FindDateTime();
+            var followersItems = FindAllFollowersItems(peopleWhoDexerFollows);
+
+            DateTime sevenDaysAgo = dateTime.AddDays(-7);
+
+            List<Items> newItems = new List<Items>();
+
+            foreach (Items item in followersItems)
+            {
+                if (item.TimeAdded > sevenDaysAgo)
+                {
+                    newItems.Add(item);
+                }
+            }
+            return newItems;
+        }
+
+        private List<Items> FindFinalListOfItemsToReturnFromTags(List<Tags> tagsThatMatch)
+        {
+            //#6
+            List<Items> listOfItemsFromTags = new List<Items>();
+            foreach (Tags tag in tagsThatMatch)
+            {
+                var itemTags = _repo.ItemTags.FindByCondition(i => i.TagsId == tag.TagId).SingleOrDefault();
+                var itemToAdd = _repo.Items.FindByCondition(i => i.ItemId == itemTags.ItemId).SingleOrDefault();
+
+                listOfItemsFromTags.Add(itemToAdd);
+            }
+            return listOfItemsFromTags;//retrun this to the master aggregator 
+        }
+
+        private List<Followers> CheckForPeopleDexerFollows()
+        {
+            //#4
+            var roboDexerUser = FindLoggedInRoboDexer();
+
+            var peopleWhoDexerFollows = _repo.Followers.FindByCondition(f => f.FollowerId == roboDexerUser.RoboDexerId).ToList();
+            return peopleWhoDexerFollows;
+        }
+
+        private List<Items> FindAllFollowersItems(List<Followers> followers)
+        {
+            //#5
+            List<Items> allFollowersItems = new List<Items>();
+            foreach (Followers follower in followers)
+            {
+                //var followersItems = _repo.Items.FindAll();
+                var inventory = _repo.Inventory.FindByCondition(i => i.RoboDexerId == follower.RoboDexerId).ToList();
+
+                foreach (Inventory item in inventory)
+                {
+                    var theItem = _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+                    allFollowersItems.Add(theItem);
+                }
+            }
+            return allFollowersItems;
+        }
+
+        private List<Tags> FindTagsInFollowersItems(List<Items> allFollowersItems)
+        {
+            //#3
+            var tagsOfFollowerItems = FindTagsFromItems(allFollowersItems);
+            return tagsOfFollowerItems;
+        }
+
+        private List<Tags> MatchTagsFromCartWithTagsFromFollowersItems(List<Tags> tagsOfFollowerItems, List<Tags> tagsOfItemsInCart)
+        {
+            var allTags = _repo.Tags.FindAll();
+
+            var tagsThatMatch = tagsOfFollowerItems.Concat(tagsOfItemsInCart)
+                .GroupBy(x => x.TagId)
+                    .Where(x => x.Count() == 1)
+                    .Select(x => x.FirstOrDefault())
+                    .ToList();
+
+            return tagsThatMatch;
+        }
+
+        private List<Items> FindItemsInShoppingCart()
+        {
+            //#1
+            var roboDexerUser = FindLoggedInRoboDexer();
+
+            var shoppingcart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == roboDexerUser.ShoppingCartId).ToList();
+
+            List<Items> items = new List<Items>();
+            foreach (ShoppingCart cart in shoppingcart)
+            {
+                var itemInCart = _repo.Items.FindByCondition(s => s.ItemId == cart.ItemId).SingleOrDefault();
+                items.Add(itemInCart);
+            }
+
+            return items;//this goes into FindTagsFromItems parameter
+        }
+
+        private List<Tags> FindTagsFromItems(List<Items> items)
+        {
+            //#2
+            List<Tags> tagsOfItemsInCart = new List<Tags>();
+            foreach (Items item in items)
+            {
+                var itemTags = _repo.ItemTags.FindByCondition(i => i.ItemId == item.ItemId).ToList();
+                foreach (ItemTags tags in itemTags)
+                {
+                    var tag = _repo.Tags.FindByCondition(t => t.TagId == tags.TagsId).SingleOrDefault();
+                    tagsOfItemsInCart.Add(tag);
+                }
+
+            }
+            return tagsOfItemsInCart;//this goes into MatchTagsFromCartWithTagsFromFollowersItems parameter
         }
     }
 
