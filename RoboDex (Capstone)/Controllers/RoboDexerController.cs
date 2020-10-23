@@ -38,7 +38,22 @@ namespace RoboDex__Capstone_.Controllers
             NavLayout();
             var userName = _repo.RoboDexer.FindByCondition(r => r.UserName == roboDexerUser.UserName).SingleOrDefault();
 
-            return View(roboDexerUser);
+            var shoppingCart = FindItemsInShoppingCart();
+            var tags = FindTagsFromItems(shoppingCart);
+
+            var followers = CheckForPeopleDexerFollows();
+            var followersItems = FindAllFollowersItems(followers);
+            var tags2 = FindTagsInFollowersItems(followersItems);
+
+            var finalListTags = MatchTagsFromCartWithTagsFromFollowersItems(tags, tags2);
+            var items1 = FindFinalListOfItemsToReturnFromTags(finalListTags);//return this to master
+
+            var newItems = FindNewItemsFromFollowers(followers);
+            var finalListItems = CompareNewItemsWithItemsFromTags(newItems, items1);
+            var itemsForView = CheckIfListOfItemsCountIsEnough(finalListItems);
+            //var allItems = PopulateListOfAllItems();
+
+            return View(itemsForView);
         }
 
         private HashSet<int> GetVariousAmountsOfRandomNumbers(int itemCount)
@@ -139,6 +154,7 @@ namespace RoboDex__Capstone_.Controllers
 
         private List<Items> FindFinalListOfItemsToReturnFromTags(List<Tags> tagsThatMatch)
         {
+            //#6
             List<Items> listOfItemsFromTags = new List<Items>();
             foreach (Tags tag in tagsThatMatch)
             {
@@ -152,6 +168,7 @@ namespace RoboDex__Capstone_.Controllers
 
         private List<Followers> CheckForPeopleDexerFollows()
         {
+            //#4
             var roboDexerUser = FindLoggedInRoboDexer();
 
             var peopleWhoDexerFollows = _repo.Followers.FindByCondition(f => f.FollowerId == roboDexerUser.RoboDexerId).ToList();
@@ -160,6 +177,7 @@ namespace RoboDex__Capstone_.Controllers
 
         private List<Items> FindAllFollowersItems(List<Followers> followers)
         {
+            //#5
             List<Items> allFollowersItems = new List<Items>();
             foreach(Followers follower in followers)
             {
@@ -176,6 +194,7 @@ namespace RoboDex__Capstone_.Controllers
 
         private List<Tags> FindTagsInFollowersItems(List<Items> allFollowersItems)
         {
+            //#3
             var tagsOfFollowerItems = FindTagsFromItems(allFollowersItems);
             return tagsOfFollowerItems;
         }
@@ -195,6 +214,7 @@ namespace RoboDex__Capstone_.Controllers
 
         private List<Items> FindItemsInShoppingCart()
         {
+            //#1
             var roboDexerUser = FindLoggedInRoboDexer();
 
             var shoppingcart = _repo.ShoppingCart.FindByCondition(s => s.ShoppingCartId == roboDexerUser.ShoppingCartId).ToList();
@@ -211,7 +231,7 @@ namespace RoboDex__Capstone_.Controllers
 
         private List<Tags> FindTagsFromItems(List<Items> items)
         {
-            
+            //#2
             List<Tags> tagsOfItemsInCart = new List<Tags>();
             foreach (Items item in items)
             {
