@@ -48,8 +48,15 @@ namespace RoboDex__Capstone_.Controllers
             var newItems = FindNewItemsFromFollowers(followers);
             var finalListItems = CompareNewItemsWithItemsFromTags(newItems, items1);
             var itemsForView = CheckIfListOfItemsCountIsEnough(finalListItems);
-
+            var thing = MakeListDivisibleByThree(itemsForView);
             return View(itemsForView);
+        }
+
+        private List<Items> MakeListDivisibleByThree(List<Items> itemsForView)
+        {
+            var count = itemsForView.Count;
+            var modulus = count % 3;
+            return itemsForView;
         }
        
         // GET: RoboDexerController/Details/5
