@@ -47,13 +47,13 @@
     padding-right: 100px;
 }
 
-.img-text-wrapper .recipe-name {
+.img-text-wrapper .item-name {
     transition: 1s;
     font-weight: 600;
     color: transparent;
 }
 
-.img-text-wrapper:hover .recipe-name {
+.img-text-wrapper:hover .item-name {
     font-weight: 600;
     color: navajowhite;
     font-size: 26px;
