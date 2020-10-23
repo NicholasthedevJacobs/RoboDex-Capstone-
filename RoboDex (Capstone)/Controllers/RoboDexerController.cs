@@ -174,13 +174,14 @@ namespace RoboDex__Capstone_.Controllers
             List<Items> allFollowersItems = new List<Items>();
             foreach(Followers follower in followers)
             {
-                var followersItems = _repo.Items.FindAll();
+                //var followersItems = _repo.Items.FindAll();
+                var inventory = _repo.Inventory.FindByCondition(i => i.RoboDexerId == follower.RoboDexerId).ToList();
 
-                foreach(Items item in followersItems)
-                {
-                    allFollowersItems.Add(item);
-                }
-
+                foreach(Inventory item in inventory)
+                {                    
+                    var theItem = _repo.Items.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
+                    allFollowersItems.Add(theItem);
+                }              
             }
             return allFollowersItems;
         }
