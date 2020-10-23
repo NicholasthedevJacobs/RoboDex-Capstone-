@@ -229,9 +229,13 @@ namespace RoboDex__Capstone_.Controllers
             List<Tags> tagsOfItemsInCart = new List<Tags>();
             foreach (Items item in items)
             {
-                var itemTags = _repo.ItemTags.FindByCondition(i => i.ItemId == item.ItemId).SingleOrDefault();
-                var tag = _repo.Tags.FindByCondition(t => t.TagId == itemTags.TagsId).SingleOrDefault();
-                tagsOfItemsInCart.Add(tag);
+                var itemTags = _repo.ItemTags.FindByCondition(i => i.ItemId == item.ItemId).ToList();
+                foreach(ItemTags tags in itemTags)
+                {
+                    var tag = _repo.Tags.FindByCondition(t => t.TagId == tags.TagsId).SingleOrDefault();
+                    tagsOfItemsInCart.Add(tag);
+                }
+                               
             }
             return tagsOfItemsInCart;//this goes into MatchTagsFromCartWithTagsFromFollowersItems parameter
         }
