@@ -3,5 +3,167 @@
     ViewData["Title"] = "Index";
 }
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link href="~/css/site.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1.0, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href=/css/site.css>
+    <link rel="stylesheet" href=/css/StyleSheet.css>
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&family=Sansita+Swashed&display=swap" rel="stylesheet">
+
+
+</head>
 <h1>Welcome Back!</h1>
 
+<div class="content-wrapper container">
+    <div class="recipe-items-wrapper">
+        <div class="recipe-item-wrapper">
+
+            <div class="recipe-img-background" style="background-image:url(@Html.ViewData.Model[0].IMGUrl)"></div>
+
+        </div>
+        <a class="anchor" href="https://localhost:44384/Recipes/Details/@Html.ViewData.Model[0].ItemId" target="_blank">
+            <div class="img-text-wrapper">
+                <div class="recipe-name">@Html.ViewData.Model[0].Name</div>
+
+
+            </div>
+        </a>
+
+    </div>
+    <div class="recipe-items-wrapper">
+        <div class="recipe-item-wrapper">
+
+            <div class="recipe-img-background" style="background-image:url(@Html.ViewData.Model[1].IMGUrl)"></div>
+
+        </div>
+        <a class="anchor" href="https://localhost:44384/Recipes/Details/@Html.ViewData.Model[1].ItemId" target="_blank">
+            <div class="img-text-wrapper">
+                <div class="recipe-name">@Html.ViewData.Model[1].Name</div>
+
+
+            </div>
+        </a>
+
+    </div>
+    <div class="recipe-items-wrapper">
+        <div class="recipe-item-wrapper">
+
+            <div class="recipe-img-background" style="background-image:url(@Html.ViewData.Model[2].IMGUrl)"></div>
+
+        </div>
+        <a class="anchor" href="https://localhost:44384/Recipes/Details/@Html.ViewData.Model[2].ItemId" target="_blank">
+            <div class="img-text-wrapper">
+                <div class="recipe-name">@Html.ViewData.Model[2].Name</div>
+
+
+            </div>
+        </a>
+
+    </div>
+    <div class="recipe-items-wrapper">
+        <div class="recipe-item-wrapper">
+
+            <div class="recipe-img-background" style="background-image:url(@Html.ViewData.Model[3].IMGUrl)"></div>
+
+        </div>
+        <a class="anchor" href="https://localhost:44384/Recipes/Details/@Html.ViewData.Model[3].ItemId" target="_blank">
+            <div class="img-text-wrapper">
+                <div class="recipe-name">@Html.ViewData.Model[3].Name</div>
+
+
+            </div>
+        </a>
+
+    </div>
+    <div class="recipe-items-wrapper">
+        <div class="recipe-item-wrapper">
+
+            <div class="recipe-img-background" style="background-image:url(@Html.ViewData.Model[4].IMGUrl)"></div>
+
+        </div>
+        <a class="anchor" href="https://localhost:44384/Recipes/Details/@Html.ViewData.Model[4].ItemId" target="_blank">
+            <div class="img-text-wrapper">
+                <div class="recipe-name">@Html.ViewData.Model[4].Name</div>
+
+
+            </div>
+        </a>
+
+    </div>
+    <div class="recipe-items-wrapper">
+        <div class="recipe-item-wrapper">
+
+            <div class="recipe-img-background" style="background-image:url(@Html.ViewData.Model[5].IMGUrl)"></div>
+
+        </div>
+        <a class="anchor" href="https://localhost:44384/Recipes/Details/@Html.ViewData.Model[5].ItemId" target="_blank">
+            <div class="img-text-wrapper">
+                <div class="recipe-name">@Html.ViewData.Model[5].Name</div>
+
+
+            </div>
+        </a>
+
+    </div>
+    <div class="recipe-items-wrapper">
+        <div class="recipe-item-wrapper">
+
+            <div class="recipe-img-background" style="background-image:url(@Html.ViewData.Model[6].IMGUrl)"></div>
+
+        </div>
+        <a class="anchor" href="https://localhost:44384/Recipes/Details/@Html.ViewData.Model[6].ItemId" target="_blank">
+            <div class="img-text-wrapper">
+                <div class="recipe-name">@Html.ViewData.Model[6].Name</div>
+
+
+            </div>
+        </a>
+
+    </div>
+    <div class="recipe-items-wrapper">
+        <div class="recipe-item-wrapper">
+
+            <div class="recipe-img-background" style="background-image:url(@Html.ViewData.Model[7].IMGUrl)"></div>
+
+        </div>
+        <a class="anchor" href="https://localhost:44384/Recipes/Details/@Html.ViewData.Model[7].ItemId" target="_blank">
+            <div class="img-text-wrapper">
+                <div class="recipe-name">@Html.ViewData.Model[7].Name</div>
+
+
+            </div>
+        </a>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+    const indexItems = document.querySelectorAll('.recipe-items-wrapper')
+    //childNodes accesses a collection of nested divs inside the recipe-item-wrapper.  This is accessed through the variable
+    //indexItems.  The event listener checks for the mouseover, and then runs a function.
+    indexItems.forEach(indexItem => {
+        indexItem.addEventListener('mouseover', () => {
+            indexItem.childNodes[1].classList.add('img-darken');
+
+
+        })
+
+        indexItem.addEventListener('mouseout', () => {
+            indexItem.childNodes[1].classList.remove('img-darken');
+        })
+
+
+
+    })
+</script>
