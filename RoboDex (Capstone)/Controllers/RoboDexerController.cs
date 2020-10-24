@@ -453,7 +453,7 @@ namespace RoboDex__Capstone_.Controllers
             return View(followedRoboDexers);
         }
 
-        public ActionResult Followers()
+        public ActionResult Followers(int id)
         {
             NavLayout();
             var loggedInRoboDexer = FindLoggedInRoboDexer();
@@ -461,7 +461,7 @@ namespace RoboDex__Capstone_.Controllers
             var dexersFollow = _repo.Followers.FindByCondition(f => f.RoboDexerId == loggedInRoboDexer.RoboDexerId).ToList();
             foreach(Followers follower in dexersFollow)
             {
-                var followedRoboDexer = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == follower.RoboDexerId).SingleOrDefault();
+                var followedRoboDexer = _repo.RoboDexer.FindByCondition(f => f.RoboDexerId == follower.FollowerId).SingleOrDefault();               
                 roboDexersThatFollow.Add(followedRoboDexer);
             }
             return View(roboDexersThatFollow);
