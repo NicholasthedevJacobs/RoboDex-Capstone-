@@ -4,10 +4,10 @@
     ViewData["Title"] = "UpdateInbox";
 }
 
-<h1>UpdateInbox</h1>
+<h1>Unread Messages</h1>
 
 <div>
-    <h4>Inbox</h4>
+    
     <hr />
     <table class="table">
         <thead>
@@ -28,8 +28,8 @@
                     </td>
 
                     <td>
-                        <a asp-action="ItemDetails" asp-route-id="@item.ItemId">Details</a>
-                        <a asp-action="MessageRead" asp-route-id="@item.Id">Mark As Read</a>
+                        | <a asp-action="ItemDetails" asp-route-id="@item.ItemId">Details</a> |
+                        <a asp-action="MessageRead" asp-route-id="@item.Id">Mark As Read</a> |
                     </td>
 
 
@@ -41,6 +41,6 @@
 </div>
 <div>
 
-    <a asp-action="ReadInbox">Go To Read Messages</a>
-    <a asp-action="Index">Back to List</a>
+    | <a asp-action="ReadInbox">Go To Read Messages</a> |
+    <a asp-action="Index">Back to List</a> |
 </div>
