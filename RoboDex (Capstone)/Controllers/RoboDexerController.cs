@@ -434,6 +434,8 @@ namespace RoboDex__Capstone_.Controllers
             return RedirectToAction(nameof(FollowedRoboDexers));
         }
 
+        
+
         public ActionResult FollowedRoboDexers()
         {
             //could probably call method that finds and returns people who they follow.
