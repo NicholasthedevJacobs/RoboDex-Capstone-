@@ -35,6 +35,7 @@ namespace RoboDex__Capstone_.Controllers
             NavLayout();
             var userName = _repo.RoboDexer.FindByCondition(r => r.UserName == roboDexerUser.UserName).SingleOrDefault();
 
+            //This section finds the list to return to index view by multiple factors.
             var shoppingCart = FindItemsInShoppingCart();
             var tags = FindTagsFromItems(shoppingCart);
 
@@ -61,7 +62,7 @@ namespace RoboDex__Capstone_.Controllers
             {
                 items.Add(itemsForView[i]);
             }
-            return items;
+              return items;
         }
        
         // GET: RoboDexerController/Details/5
@@ -695,11 +696,12 @@ namespace RoboDex__Capstone_.Controllers
                 {
                     finalList.Add(itemsThatMatch[number]);
                 }
+                return finalList;
             }
             else
             {
                 var allItems = PopulateListOfAllItems();
-                foreach (Items item in itemsThatMatch)
+                foreach (Items item in allItems)
                 {
                     finalList.Add(item);
                 }
@@ -707,13 +709,14 @@ namespace RoboDex__Capstone_.Controllers
                 var listOfExtraItems = CompareNewItemsWithItemsFromTags(allItems, itemsThatMatch);
 
                 var listOfNumbers = GetVariousAmountsOfRandomNumbers(finalList.Count);
-
+                List<Items> items = new List<Items>();
                 foreach (int number in listOfNumbers)
                 {
-                    finalList.Add(listOfExtraItems[number]);
+                    items.Add(listOfExtraItems[number]);
                 }
+                return items;
             }
-            return finalList;
+
         }
 
         private List<Items> PopulateListOfAllItems()
