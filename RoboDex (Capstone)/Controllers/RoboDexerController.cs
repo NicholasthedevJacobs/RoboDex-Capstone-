@@ -69,16 +69,21 @@ namespace RoboDex__Capstone_.Controllers
         public ActionResult Details(int id)
         {
             NavLayout();
+            var roboDexerUser = FindLoggedInRoboDexer();
             if (id == 0)
             {
-                var roboDexerUser = FindLoggedInRoboDexer();
+                
                 return View(roboDexerUser);
             }
 
             var item = _repo.Items.FindByCondition(i => i.ItemId == id).FirstOrDefault();
             var inventory = _repo.Inventory.FindByCondition(l => l.ItemId == item.ItemId).SingleOrDefault();
             var roboDexer = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == inventory.RoboDexerId).SingleOrDefault();
-                   
+            
+            if(roboDexer.RoboDexerId != roboDexerUser.RoboDexerId)
+            {
+
+            }
             return View(roboDexer);
         }
 
@@ -107,7 +112,9 @@ namespace RoboDex__Capstone_.Controllers
         {
             NavLayout();
             var item = _repo.Items.FindByCondition(i => i.ItemId == id).SingleOrDefault();
+           
             var itemToReturn = ConvertItemToItemTagsLocation(item);
+            
             return View(itemToReturn);
         }      
 
@@ -581,6 +588,7 @@ namespace RoboDex__Capstone_.Controllers
             return RedirectToAction("Index");
         }
 
+        //******BELOW ARE ALL OF THE HELPER METHODS******
         private List<ItemTagsLocation> FindMyInventory(RoboDexer loggedInRoboDexer)
         {
             

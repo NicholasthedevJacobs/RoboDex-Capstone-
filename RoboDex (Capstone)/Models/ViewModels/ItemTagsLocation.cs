@@ -14,5 +14,6 @@ namespace RoboDex__Capstone_.Models.ViewModels
         public int TagId { get; set; }
         public LocationPlace LocationPlace { get; set; }
         public Inventory Inventory { get; set; }
+        public RoboDexer RoboDexer { get; set; }
     }
 }
