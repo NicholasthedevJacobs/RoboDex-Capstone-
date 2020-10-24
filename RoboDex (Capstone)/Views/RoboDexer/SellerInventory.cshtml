@@ -53,33 +53,7 @@
 
                 </tr>
             }
-                @*@foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Item.Price)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Item.IMGUrl)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TagName)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Item.ItemId">Edit</a> |
-                            <a asp-action="DeleteItem" asp-route-id="@item.Item.ItemId">Delete</a> |
-                            <a asp-action="ItemDetails" asp-route-id="@item.Item.ItemId">Details</a> |
 
-                        </td>
-
-
-                    </tr>
-
-
-                }*@
                 </tbody>
 
             </table>
