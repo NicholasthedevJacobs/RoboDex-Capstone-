@@ -13,9 +13,10 @@
             <input class="form-control mr-sm-2" type="text" style=" width: 50%;" name="SearchTerm">
             <input class="btn btn-primary my-sm-0" type="submit" value="Search" />
         </div>
+        <a asp-controller="RoboDexer" asp-action="AddItem">Add Item</a>
     </p>
 </form>
-<a asp-controller="RoboDexer" asp-action="AddItem" >Add Item</a>
+
 <table class="table">
     <thead>
         <tr>
@@ -67,9 +68,9 @@
                 @Html.DisplayFor(modelItem => item.LocationPlace.SecondaryLocation)
             </td>
             <td>
-                <a asp-action="EditItem" asp-route-id="@item.Items.ItemId">Edit</a>
-                <a asp-action="DeleteItem" asp-route-id="@item.Items.ItemId">Delete</a>
-                <a asp-action="ItemDetails" asp-route-id="@item.Items.ItemId">Details</a>
+                | <a asp-action="EditItem" asp-route-id="@item.Items.ItemId">Edit</a> |
+                <a asp-action="DeleteItem" asp-route-id="@item.Items.ItemId">Delete</a> |
+                <a asp-action="ItemDetails" asp-route-id="@item.Items.ItemId">Details</a> |
             </td>
 
 
