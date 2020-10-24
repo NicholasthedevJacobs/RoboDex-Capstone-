@@ -83,14 +83,14 @@ namespace RoboDex__Capstone_.Controllers
             if(roboDexer.RoboDexerId != roboDexerUser.RoboDexerId)
             {
                 var dexerId = roboDexer.RoboDexerId;
-                return RedirectToAction("SellerProfileInfo", new { dexerId });
+                return RedirectToAction("SellerProfileInfo", new { id = dexerId });
             }
             return View(roboDexer);
         }
 
-        public ActionResult SellerProfileInfo(int dexerId)
+        public ActionResult SellerProfileInfo(int id)
         {
-            var roboDexer = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == dexerId).SingleOrDefault();
+            var roboDexer = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == id).SingleOrDefault();
             return View(roboDexer);
         }
 

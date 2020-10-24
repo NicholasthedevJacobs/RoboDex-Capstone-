@@ -16,9 +16,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model[0].UserName)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model[0].IMGUrl)
-                    </th>
+                    
                     <th>
                         @Html.DisplayNameFor(model => model[0].ContactInfo)
                     </th>
@@ -30,22 +28,21 @@
             <tbody>
                 @for (int i = 0; i < Model.Count; i++)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => model[i].UserName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => model[i].IMGUrl)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => model[i].ContactInfo)
-                        </td>
-                        
-                        @*<td>
-                            <a asp-action="ItemDetails" asp-route-id="@ViewData.Model[i].Item.ItemId">Details</a>
-                        </td>*@
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model[i].UserName)
+                    </td>
 
-                    </tr>
+                    <td>
+                        @Html.DisplayFor(model => model[i].ContactInfo)
+                    </td>
+
+
+                    <td>
+                        <a asp-action="SellerProfileInfo" asp-route-id="@Model[i].RoboDexerId">Profile</a>
+                    </td>
+
+                </tr>
                 }
 </div>
 @*<div>
