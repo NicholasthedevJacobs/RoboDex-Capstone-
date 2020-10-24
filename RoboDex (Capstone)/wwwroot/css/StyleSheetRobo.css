@@ -17,7 +17,7 @@
 
 .item-wrapper {
     position: relative;
-    color: tan;
+    color: forestgreen;
     margin: 4px;
 }
 
@@ -43,13 +43,13 @@
     padding-right: 100px;
 }
 
-    .img-text-wrapper .items-name {
+    .img-text-wrapper .item-name {
         transition: 1s;
         font-weight: 600;
         color: transparent;
     }
 
-    .img-text-wrapper:hover .items-name {
+    .img-text-wrapper:hover .item-name {
         font-weight: 600;
         color: navajowhite;
         font-size: 26px;
@@ -66,5 +66,6 @@
 }
 
 .item-name {
-    color: goldenrod;
+    color: blueviolet;
 }
+
