@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Dexter-no-background.jpg" />
     <None Include="wwwroot\Dexter.jpg" />
   </ItemGroup>
 

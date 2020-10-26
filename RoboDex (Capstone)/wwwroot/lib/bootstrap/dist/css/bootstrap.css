@@ -4563,6 +4563,10 @@ input[type="button"].btn-block {
   border-radius: 0.25rem;
 }
 
+.navbar {
+    color: mediumvioletred !important;
+}
+
 .card > hr {
   margin-right: 0;
   margin-left: 0;
@@ -6588,7 +6592,7 @@ button.bg-dark:focus {
 }
 
 .bg-white {
-  background-color: #fff !important;
+  background-color: chartreuse !important;
 }
 
 .bg-transparent {
