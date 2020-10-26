@@ -19,9 +19,28 @@
 
 </head>
 <body>
+   
 
     <div class="content-wrapper container">
-        <div class="items-wrapper">
+        @for(int i = 0; i < Model.Count; i++)
+        {
+            <div class="items-wrapper">
+                <div class="item-wrapper">
+
+                    <div class="items-img-background" style="background-image:url(@Html.ViewData.Model[i].IMGUrl)"></div>
+
+                </div>
+                <a class="anchor" href="https://localhost:44365/RoboDexer/ItemDetails/@Html.ViewData.Model[i].ItemId" target="_blank">
+                    <div class="img-text-wrapper">
+                        <div class="item-name">@Html.ViewData.Model[i].Name</div>
+
+
+                    </div>
+                </a>
+
+            </div>
+        }
+        @*<div class="items-wrapper">
             <div class="item-wrapper">
 
                 <div class="items-img-background" style="background-image:url(@Html.ViewData.Model[0].IMGUrl)"></div>
@@ -57,7 +76,7 @@
                 <div class="items-img-background" style="background-image:url(@Html.ViewData.Model[2].IMGUrl)"></div>
 
             </div>
-            <a class="anchor" href="https://localhost:44365/RoboDexer/ItemDetails//@Html.ViewData.Model[2].ItemId" target="_blank">
+            <a class="anchor" href="https://localhost:44365/RoboDexer/ItemDetails/@Html.ViewData.Model[2].ItemId" target="_blank">
                 <div class="img-text-wrapper">
                     <div class="item-name">@Html.ViewData.Model[2].Name</div>
 
@@ -110,7 +129,7 @@
                 </div>
             </a>
 
-        </div>
+        </div>*@
 
 
 
@@ -118,7 +137,7 @@
 
 
 
-        <script>
+    <script>
 
         const indexItems = document.querySelectorAll('.items-wrapper')
         //childNodes accesses a collection of nested divs inside the item-wrapper.  This is accessed through the variable
@@ -137,11 +156,11 @@
 
 
         })
-        </script>
+    </script>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 </html>
 <div>
