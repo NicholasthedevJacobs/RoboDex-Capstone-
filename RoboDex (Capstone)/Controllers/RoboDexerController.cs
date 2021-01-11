@@ -97,6 +97,16 @@ namespace RoboDex__Capstone_.Controllers
 
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProfile(RoboDexer roboDexer)
+        {
+            _repo.RoboDexer.Update(roboDexer);
+            _repo.Save();
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult SellerProfileInfo(int id)
         {
             var roboDexer = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == id).SingleOrDefault();

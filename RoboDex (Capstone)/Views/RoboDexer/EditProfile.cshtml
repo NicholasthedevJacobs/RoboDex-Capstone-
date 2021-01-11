@@ -7,7 +7,11 @@
         <form asp-action="EditProfile">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="RoboDexerId" />
-            
+            <input type="hidden" asp-for="IdentityUserId" />
+            <input type="hidden" asp-for="InboxId" />
+            <input type="hidden" asp-for="InventoryId" />
+            <input type="hidden" asp-for="ShoppingCartId" />
+
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
                 <input asp-for="UserName" class="form-control" />
@@ -33,7 +37,7 @@
                 <input asp-for="IMGUrl" class="form-control" />
                 <span asp-validation-for="IMGUrl" class="text-danger"></span>
             </div>
-            
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
