@@ -88,6 +88,15 @@ namespace RoboDex__Capstone_.Controllers
             return View(roboDexer);
         }
 
+        public ActionResult EditProfile(int id)
+        {
+            var roboDexer = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == id).FirstOrDefault();
+
+            return View(roboDexer);
+
+
+        }
+
         public ActionResult SellerProfileInfo(int id)
         {
             var roboDexer = _repo.RoboDexer.FindByCondition(r => r.RoboDexerId == id).SingleOrDefault();
